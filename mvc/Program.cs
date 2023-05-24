@@ -1,10 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using mvc.Data;
+using mvc.Data.DataSeed;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<AppDbContext>(options => { 
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnectionString"));
+});
 var app = builder.Build();
-
+// seed the database if it's empty
+DataSeeding.Seed(app);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
