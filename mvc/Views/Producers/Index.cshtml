@@ -7,7 +7,7 @@
 <h1>Producers</h1>
 
 <table class="table">
-    <thead>
+    <thead class="text-center">
         <tr>
             <th>
                 Picture
@@ -18,14 +18,16 @@
             <th>
                 Bio
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                <img src=@item.ProfilePictureUrl>
+                <img style="width: 100px;" class="rounded-circle" src=@item.ProfilePictureUrl>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
@@ -33,11 +35,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Bio)
             </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+            <td>
+                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">
+                    <i class="bi bi-pencil-square"></i>Edit
+                </a>
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">
+                    <i class="bi bi-eye"></i> Details
+                </a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                    <i class="bi bi-trash"></i>Delete
+                </a>
+            </td>
         </tr>
 }
     </tbody>
