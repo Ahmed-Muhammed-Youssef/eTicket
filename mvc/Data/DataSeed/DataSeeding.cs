@@ -313,7 +313,7 @@ namespace mvc.Data.DataSeed
                 }
                 catch(Exception ex)
                 {
-                    throw;
+                    throw new Exception("Seeding data error", ex);
                 }
             }
         }
