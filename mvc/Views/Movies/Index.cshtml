@@ -38,13 +38,13 @@
                         <div class="col-md-12">
                             <div class="card-footer">
                                 <p class="card-text">
-                                    <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@movie?.Id">
-                                        <i class="bi bi-eye-fill"></i>
-                                        Show details
-                                    </a>
-                                    <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@movie?.Id">
+                                    <a class="btn btn-success" asp-action="Details" asp-route-id="@movie?.Id">
                                         <i class="bi bi-cart-plus"></i>
                                         Add to cart
+                                    </a>
+                                    <a class="btn btn-outline-primary float-end" asp-action="Details" asp-route-id="@movie?.Id">
+                                        <i class="bi bi-eye-fill"></i>
+                                        Show details
                                     </a>
                                 </p>
                             </div>
