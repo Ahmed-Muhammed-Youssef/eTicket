@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Interfaces;
@@ -35,6 +36,15 @@ namespace mvc.Controllers
             }
             await _actorService.AddAsync(actor);
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var actor = await _actorService.GetByIdAsync(id);
+            if(actor == null)
+            {
+                return View("NotFound");
+            }
+            return View(actor);
         }
     }
 }
