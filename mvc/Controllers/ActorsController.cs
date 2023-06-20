@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Interfaces;
+using mvc.Models;
 
 namespace mvc.Controllers
 {
@@ -13,10 +14,27 @@ namespace mvc.Controllers
         {
             this._actorService = actorService;
         }
+
+        // GET: Actors/Index
         public async Task<IActionResult> Index()
         {
             var actors = await _actorService.GetAllAsync();
             return View(actors);
+        }
+        // GET: Actors/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("FullName, ProfilePictureUrl, Bio")]Actor actor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            await _actorService.AddAsync(actor);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
