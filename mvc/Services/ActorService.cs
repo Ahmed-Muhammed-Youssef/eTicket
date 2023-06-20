@@ -23,12 +23,12 @@ namespace mvc.Services
         public async Task DeleteAsync(int id)
         {
             var actor = await _context.Actor.FindAsync(id);
-            if(actor != null)
+            if(actor == null)
             {
-                _context.Actor.Remove(actor);
-                await _context.SaveChangesAsync();
+                throw new Exception($"Invalid Id: {id}");
             }
-            throw new Exception($"Invalid Id: {id}");
+            _context.Actor.Remove(actor);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Actor>> GetAllAsync()
