@@ -66,5 +66,26 @@ namespace mvc.Controllers
             await _actorService.UpdateAsync(actor);
             return RedirectToAction(nameof(Index));
         }
+        // GET: Actors/Delete/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            var actor = await _actorService.GetByIdAsync(id);
+            if(actor == null)
+            {
+                return View("NotFound");
+            }
+            return View(actor);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var actor = await _actorService.GetByIdAsync(id);
+            if (actor == null)
+            {
+                return View("NotFound");
+            }
+            await _actorService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
