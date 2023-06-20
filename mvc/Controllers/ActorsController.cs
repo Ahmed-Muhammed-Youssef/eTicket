@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
-using Microsoft.EntityFrameworkCore;
-using mvc.Data;
 using mvc.Interfaces;
 using mvc.Models;
 
@@ -37,6 +34,7 @@ namespace mvc.Controllers
             await _actorService.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
+        // GET: Actors/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
             var actor = await _actorService.GetByIdAsync(id);
@@ -45,6 +43,28 @@ namespace mvc.Controllers
                 return View("NotFound");
             }
             return View(actor);
+        }
+        
+        
+        // GET: Actors/Edit/{id}
+        public async Task<IActionResult> Edit(int id)
+        {
+            var actor  = await _actorService.GetByIdAsync(id);
+            if(actor == null)
+            {
+                return View("NotFound");
+            }
+            return View(actor);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Actor actor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            await _actorService.UpdateAsync(actor);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
