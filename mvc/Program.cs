@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Data.DataSeed;
+using mvc.Interfaces;
+using mvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options => { 
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnectionString"));
 });
+
+// my services
+builder.Services.AddScoped<IActorService, ActorService>();
+
+
 var app = builder.Build();
 // seed the database if it's empty
 DataSeeding.Seed(app);
@@ -21,6 +28,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
