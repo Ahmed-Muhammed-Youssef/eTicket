@@ -1,6 +1,8 @@
-﻿namespace mvc.Models
+﻿using mvc.Data.Base;
+
+namespace mvc.Models
 {
-    public class Producer
+    public class Producer : IEntityBase
     {
         public int Id { get; set; }
         public string? ProfilePictureUrl { get; set; }

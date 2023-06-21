@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using mvc.Data.Base;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace mvc.Models
 {
-    public class Actor
+    public class Actor : IEntityBase
     {
         public int Id { get; set; }
 

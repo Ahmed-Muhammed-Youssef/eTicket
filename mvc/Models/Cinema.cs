@@ -1,6 +1,8 @@
-﻿namespace mvc.Models
+﻿using mvc.Data.Base;
+
+namespace mvc.Models
 {
-    public class Cinema
+    public class Cinema : IEntityBase
     {
         public int Id { get; set; }
         public string? Name { get; set; }

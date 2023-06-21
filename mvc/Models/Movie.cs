@@ -1,8 +1,9 @@
-﻿using mvc.Data.Enums;
+﻿using mvc.Data.Base;
+using mvc.Data.Enums;
 
 namespace mvc.Models
 {
-    public class Movie
+    public class Movie : IEntityBase
     {
         public int Id { get; set; }
         public string? Name { get; set; }
