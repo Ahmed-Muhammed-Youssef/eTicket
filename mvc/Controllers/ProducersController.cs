@@ -49,5 +49,26 @@ namespace mvc.Controllers
             await _producerService.AddAsync(producer);
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: Producers/Edit/{id}
+        public async Task<IActionResult> Edit(int id)
+        {
+            var producer = await _producerService.GetByIdAsync(id);
+            if (producer == null)
+            {
+                return View("NotFound");
+            }
+            return View(producer);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Producer producer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(producer);
+            }
+            await _producerService.UpdateAsync(producer);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
