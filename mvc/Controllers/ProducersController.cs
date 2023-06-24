@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Interfaces;
+using mvc.Models;
+using mvc.Services;
 
 namespace mvc.Controllers
 {
@@ -28,6 +30,24 @@ namespace mvc.Controllers
                 return View(producer);
             }
             return View("NotFound");
+        }
+
+        // GET: Producers/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Producers/Create
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("FullName, ProfilePictureUrl, Bio")] Producer producer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(producer);
+            }
+            await _producerService.AddAsync(producer);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
