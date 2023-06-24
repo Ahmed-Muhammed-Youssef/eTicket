@@ -70,5 +70,29 @@ namespace mvc.Controllers
             await _producerService.UpdateAsync(producer);
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: Producers/Delete/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            var producer= await _producerService.GetByIdAsync(id);
+            if (producer == null)
+            {
+                return View("NotFound");
+            }
+            return View(producer);
+        }
+
+        // POST: Producers/Delete/{id}
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var producer = await _producerService.GetByIdAsync(id);
+            if (producer == null)
+            {
+                return View("NotFound");
+            }
+            await _producerService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
