@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using mvc.Models;
 
 namespace mvc.Data.Base
 {
