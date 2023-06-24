@@ -18,5 +18,16 @@ namespace mvc.Controllers
             var producers = await _producerService.GetAllAsync();
             return View(producers);
         }
+        
+        // GET: Producers/Details/{id}
+        public async Task<IActionResult> Details(int id)
+        {
+            var producer = await _producerService.GetByIdAsync(id);
+            if(producer != null)
+            {
+                return View(producer);
+            }
+            return View("NotFound");
+        }
     }
 }
