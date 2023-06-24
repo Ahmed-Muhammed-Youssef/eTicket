@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
+using mvc.Interfaces;
 
 namespace mvc.Controllers
 {
     public class ProducersController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IProducerService _producerService;
 
-        public ProducersController(AppDbContext appDbContext)
+        public ProducersController(IProducerService producerService)
         {
-            this._context = appDbContext;
+            this._producerService = producerService;
         }
         public async Task<IActionResult> Index()
         {
-            var producers = await _context.Producer.ToListAsync();
+            var producers = await _producerService.GetAllAsync();
             return View(producers);
         }
     }
