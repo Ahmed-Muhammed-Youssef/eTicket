@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Interfaces;
+using mvc.Services;
 
 namespace mvc.Controllers
 {
@@ -17,6 +18,18 @@ namespace mvc.Controllers
         {
             var movies = await _movieService.GetAllAsync(n => n.Cinema);
             return View(movies);
+        }
+
+        // GET: Movies/Details/{id}
+        public async Task<IActionResult> Details(int id)
+        {
+            var movie = await _movieService
+                .GetByIdWithInclusionAsync(id);
+            if (movie != null)
+            {
+                return View(movie);
+            }
+            return View("NotFound");
         }
     }
 }
