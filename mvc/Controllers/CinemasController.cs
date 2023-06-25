@@ -35,6 +35,7 @@ namespace mvc.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Name, Logo, Description")] Cinema cinema)
         {
@@ -43,6 +44,27 @@ namespace mvc.Controllers
                 return View(cinema);
             }
             await _cinemaService.AddAsync(cinema);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Actors/Edit/{id}
+        public async Task<IActionResult> Edit(int id)
+        {
+            var cinema = await _cinemaService.GetByIdAsync(id);
+            if (cinema == null)
+            {
+                return View("NotFound");
+            }
+            return View(cinema);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Cinema cinema)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(cinema);
+            }
+            await _cinemaService.UpdateAsync(cinema);
             return RedirectToAction(nameof(Index));
         }
 
