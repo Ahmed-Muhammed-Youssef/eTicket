@@ -5,6 +5,5 @@ namespace mvc.Interfaces
 {
     public interface IMovieService : IEntityBaseRepository<Movie>
     {
-        Task<IEnumerable<Movie>> GetAllWithCinemaAsync();
     }
 }

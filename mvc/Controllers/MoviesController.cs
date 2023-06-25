@@ -15,7 +15,7 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var movies = await _movieService.GetAllWithCinemaAsync();
+            var movies = await _movieService.GetAllAsync(n => n.Cinema);
             return View(movies);
         }
     }
