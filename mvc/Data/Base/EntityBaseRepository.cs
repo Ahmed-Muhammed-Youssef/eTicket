@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace mvc.Data.Base
 {
@@ -32,6 +33,15 @@ namespace mvc.Data.Base
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object?>>[] includeProperties)
+        {
+            var query = _dbContext.Set<T>().AsQueryable<T>();
+            query = includeProperties
+                .Aggregate(query,
+                (current, includeProperties) => current.Include(includeProperties));
+            return await query.ToListAsync();
         }
 
         public async Task<T?> GetByIdAsync(int id)

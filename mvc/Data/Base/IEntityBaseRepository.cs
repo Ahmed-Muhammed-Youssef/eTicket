@@ -1,4 +1,5 @@
 ﻿using mvc.Models;
+using System.Linq.Expressions;
 
 namespace mvc.Data.Base
 {
@@ -8,6 +9,7 @@ namespace mvc.Data.Base
         public Task<T> AddAsync(T entity);
         // GET
         public Task<IEnumerable<T>> GetAllAsync();
+        public Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object?>>[] includeProperties);
         public Task<T?> GetByIdAsync(int id);
         // DELETE
         public Task DeleteAsync(int id);
