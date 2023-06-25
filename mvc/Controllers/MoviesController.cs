@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
+using mvc.Interfaces;
 
 namespace mvc.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IMovieService _movieService;
 
-        public MoviesController(AppDbContext appDbContext)
+        public MoviesController(IMovieService movieService)
         {
-            this._context = appDbContext;
+            this._movieService = movieService;
         }
         public async Task<IActionResult> Index()
         {
-            var movies = await _context.Movie
-                .Include(m => m.Producer)
-                .Include(m => m.Cinema)
-                .ToListAsync();
+            var movies = await _movieService.GetAllWithCinemaAsync();
             return View(movies);
         }
     }
