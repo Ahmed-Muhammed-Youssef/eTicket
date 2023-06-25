@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using mvc.Data;
+using mvc.Interfaces;
 
 namespace mvc.Controllers
 {
     public class CinemasController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly ICinemaService _cinemaService;
 
-        public CinemasController(AppDbContext appDbContext)
+        public CinemasController(ICinemaService cinemaService)
         {
-            this._context = appDbContext;
+            this._cinemaService = cinemaService;
         }
         public async Task<IActionResult> Index()
         {
-            var cinemas = await _context.Cinema.ToListAsync();
+            var cinemas = await _cinemaService.GetAllAsync();
             return View(cinemas);
         }
     }
