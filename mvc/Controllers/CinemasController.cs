@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mvc.Interfaces;
+using mvc.Services;
 
 namespace mvc.Controllers
 {
@@ -15,6 +16,17 @@ namespace mvc.Controllers
         {
             var cinemas = await _cinemaService.GetAllAsync();
             return View(cinemas);
+        }
+
+        // GET: Cinemas/Details/{id}
+        public async Task<IActionResult> Details(int id)
+        {
+            var cinema = await _cinemaService.GetByIdAsync(id);
+            if (cinema != null)
+            {
+                return View(cinema);
+            }
+            return View("NotFound");
         }
     }
 }
