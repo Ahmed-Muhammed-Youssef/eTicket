@@ -47,7 +47,7 @@ namespace mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Actors/Edit/{id}
+        // GET: Cinemas/Edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
             var cinema = await _cinemaService.GetByIdAsync(id);
@@ -57,6 +57,7 @@ namespace mvc.Controllers
             }
             return View(cinema);
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(Cinema cinema)
         {
@@ -65,6 +66,28 @@ namespace mvc.Controllers
                 return View(cinema);
             }
             await _cinemaService.UpdateAsync(cinema);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Cinemas/Delete/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cinema = await _cinemaService.GetByIdAsync(id);
+            if (cinema == null)
+            {
+                return View("NotFound");
+            }
+            return View(cinema);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var cinema = await _cinemaService.GetByIdAsync(id);
+            if (cinema == null)
+            {
+                return View("NotFound");
+            }
+            await  _cinemaService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
