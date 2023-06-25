@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options => {
 // my services
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
+builder.Services.AddScoped<ICinemaService, CinemaService>();
 
 
 var app = builder.Build();
