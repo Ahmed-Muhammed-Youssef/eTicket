@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mvc.Interfaces;
+using mvc.Models;
 using mvc.Services;
 
 namespace mvc.Controllers
@@ -28,5 +29,22 @@ namespace mvc.Controllers
             }
             return View("NotFound");
         }
+
+        // Get: Cinemas/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("Name, Logo, Description")] Cinema cinema)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(cinema);
+            }
+            await _cinemaService.AddAsync(cinema);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
