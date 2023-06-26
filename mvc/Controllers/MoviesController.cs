@@ -129,5 +129,16 @@ namespace mvc.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var movies = await _movieService.GetAllAsync(n => n.Cinema);
+            if(string.IsNullOrEmpty(searchString))
+            {
+                return View("Index", movies);
+            }
+            searchString = searchString.ToLower();
+            return View("Index", movies.Where(m => m.Name!.ToLower().Contains(searchString) || m.Description!.ToLower().Contains(searchString)));
+        }
     }
 }
