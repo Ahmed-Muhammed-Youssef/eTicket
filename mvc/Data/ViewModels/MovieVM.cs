@@ -6,6 +6,8 @@ namespace mvc.Data.ViewModels
 {
     public class MovieVM
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Name is required")]
         [Display(Name = "Movie name")]
         public string? Name { get; set; }
