@@ -8,5 +8,6 @@ namespace mvc.Interfaces
     {
         Task<Movie?> GetByIdWithInclusionAsync(int id);
         Task<Movie> AddMovieVMAsync(MovieVM movieVM);
+        Task<Movie?> UpdateMovieVMAsync(MovieVM movieVM);
     }
 }

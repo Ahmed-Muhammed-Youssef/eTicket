@@ -53,6 +53,52 @@ namespace mvc.Services
             return movie;
         }
 
+        public async Task<Movie?> UpdateMovieVMAsync(MovieVM movieVM)
+        {
+
+            var oldMovie = await GetByIdWithInclusionAsync(movieVM.Id);
+            if(oldMovie == null)
+            {
+                return null;
+            }
+
+            //Rremove existing ActorMovies
+            var existingActorMovies = oldMovie.ActorsMovies!.Where(am => am.MovieId == oldMovie.Id);
+            dbContext.ActorMovie.RemoveRange(existingActorMovies);
+            await dbContext.SaveChangesAsync();
+
+            oldMovie.Id = movieVM.Id;
+            oldMovie.Name = movieVM.Name;
+            oldMovie.Price = movieVM.Price;
+            oldMovie.Description = movieVM.Description;
+            oldMovie.StratDate = movieVM.StratDate;
+            oldMovie.EndDate = movieVM.EndDate;
+            oldMovie.MovieCategory = movieVM.MovieCategory;
+            oldMovie.ImageUrl = movieVM.ImageUrl;
+            oldMovie.ProducerId = movieVM.ProducerId;
+            oldMovie.CinemaId = movieVM.CinemaId;
+            await dbContext.SaveChangesAsync();
+            try
+            {
+                foreach (var actorId in movieVM.ActorIds)
+                {
+                    var actorMovie = new ActorMovie
+                    {
+                        ActorId = actorId,
+                        MovieId = oldMovie.Id
+                    };
+                    await dbContext.AddAsync(actorMovie);
+                }
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                await dbContext.DisposeAsync();
+                throw new Exception("Failed to add movie, pls try again.", ex);
+            }
+            return oldMovie;
+        }
+
         public async Task<Movie?> GetByIdWithInclusionAsync(int id)
         {
             return await dbContext.Movie
