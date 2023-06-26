@@ -73,5 +73,61 @@ namespace mvc.Controllers
             
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: Movies/Edit/{id}
+        public async Task<IActionResult> Edit(int id)
+        {
+            var movie = await _movieService
+                .GetByIdWithInclusionAsync(id);
+            if (movie == null)
+            {
+                return View("NotFound");
+            }
+            
+            var actors = _actorService.GetAllAsync();
+            var producers = _producerService.GetAllAsync();
+            var cinemas = _cinemaService.GetAllAsync();
+
+            var movieVm = new MovieVM()
+            {
+                Id = movie!.Id,
+                Name = movie.Name,
+                Price = movie.Price,
+                Description = movie.Description,
+                StratDate = movie.StratDate,
+                EndDate = movie.EndDate,
+                MovieCategory = movie.MovieCategory,
+                ImageUrl = movie.ImageUrl,
+                ProducerId = movie.ProducerId,
+                CinemaId = movie.CinemaId,
+                ActorIds = movie.ActorsMovies!.Select(am => am.ActorId)
+            };
+            await Task.WhenAll(actors, producers, cinemas);
+            ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
+            ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
+            ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
+
+            return View(movieVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(MovieVM movieVm)
+        {
+            var actors = _actorService.GetAllAsync();
+            var producers = _producerService.GetAllAsync();
+            var cinemas = _cinemaService.GetAllAsync();
+            await Task.WhenAll(actors, producers, cinemas);
+            ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
+            ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
+            ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
+            if (!ModelState.IsValid)
+            {
+                return View(movieVm);
+            }
+
+            var movie = await _movieService.UpdateMovieVMAsync(movieVm);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
