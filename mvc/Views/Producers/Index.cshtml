@@ -5,11 +5,8 @@
 }
 
 <h1>Producers</h1>
-<div style="z-index: 1;" class="position-fixed shadow bottom-0 end-0 mb-4 me-4">
-    <a asp-controller="Producers" asp-action="Create" class="w-auto btn btn-success">
-        <i class="bi bi-plus-circle me-1"></i>Add new producer
-    </a>
-</div>
+<partial name="_CreateItem" model='"Producers"' />
+
 <table class="table">
     <thead class="text-center">
         <tr>

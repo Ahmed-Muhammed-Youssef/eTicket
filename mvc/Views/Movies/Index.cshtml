@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Movies";
 }
-
+<partial name="_CreateItem" model='"Movies"' />
     <div class="row">
         @foreach(var movie in Model)
         {
