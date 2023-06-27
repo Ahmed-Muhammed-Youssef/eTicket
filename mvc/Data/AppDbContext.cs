@@ -11,6 +11,8 @@ namespace mvc.Data
         public DbSet<ActorMovie> ActorMovie { get; set; }
         public DbSet<Producer> Producer { get; set; }
         public DbSet<Cinema> Cinema { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<OrderItem> OrderItem { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -21,6 +23,8 @@ namespace mvc.Data
             modelBuilder.ApplyConfiguration(new MovieConfigurations());
             modelBuilder.ApplyConfiguration(new CinemaConfigurations());
             modelBuilder.ApplyConfiguration(new ProducerConfigurations());
+            modelBuilder.ApplyConfiguration(new OrderConfigurations());
+            modelBuilder.ApplyConfiguration(new OrderItemConfigurations());
             base.OnModelCreating(modelBuilder);
         }
     }
