@@ -13,6 +13,8 @@ namespace mvc.Data
         public DbSet<Cinema> Cinema { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartItem> CartItem { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -25,6 +27,8 @@ namespace mvc.Data
             modelBuilder.ApplyConfiguration(new ProducerConfigurations());
             modelBuilder.ApplyConfiguration(new OrderConfigurations());
             modelBuilder.ApplyConfiguration(new OrderItemConfigurations());
+            modelBuilder.ApplyConfiguration(new CartConfigurations());
+            modelBuilder.ApplyConfiguration(new CartItemConfigurations());
             base.OnModelCreating(modelBuilder);
         }
     }
