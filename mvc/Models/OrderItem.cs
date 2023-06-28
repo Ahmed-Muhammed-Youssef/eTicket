@@ -1,6 +1,8 @@
-﻿namespace mvc.Models
+﻿using mvc.Data.Base;
+
+namespace mvc.Models
 {
-    public class OrderItem
+    public class OrderItem : IEntityBase
     {
         public int Id { get; set; }
         public int Amount { get; set; }

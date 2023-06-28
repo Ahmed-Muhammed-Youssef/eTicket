@@ -1,6 +1,8 @@
-﻿namespace mvc.Models
+﻿using mvc.Data.Base;
+
+namespace mvc.Models
 {
-    public class Order
+    public class Order : IEntityBase
     {
         public int Id { get; set; }
         public string Email { get; set; } = "";
