@@ -1,6 +1,8 @@
-﻿namespace mvc.Models
+﻿using mvc.Data.Base;
+
+namespace mvc.Models
 {
-    public class Cart
+    public class Cart : IEntityBase
     {
         public int Id { get; set; }
         public string Email { get; set; } = "";
