@@ -35,11 +35,11 @@
                         <td class="align-middle">@item.Movie.Name</td>
                         <td class="align-middle">@item.Movie.Price.ToString("c")</td>
                         <td class="align-middle">@item.Price.ToString("c")</td>
-                        <td class="align-middle">
-                            <a class="text-danger" asp-controller="Orders" asp-action="RemoveItemFromCart">
+                        <td class="align-middle button-group">
+                            <a class="text-danger btn" asp-controller="Orders" asp-action="RemoveItemFromCart" asp-route-id="@item.Movie.Id">
                                 <i class="bi bi-cart-dash"></i>
                             </a>
-                            <a class="text-success" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@item.Movie.Id">
+                            <a class="text-success btn" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@item.Movie.Id">
                                 <i class="bi bi-cart-plus"></i>
                             </a>
                         </td>
