@@ -89,29 +89,26 @@ namespace mvc.Services
 
         public async Task<Cart?> RemoveMovieFromCartAsync(int movieId, int userId, string email)
         {
-            var movie  = await _dbContext.Movie
-                .FirstOrDefaultAsync(Movie => Movie.Id == movieId);
             var cart = await _dbContext.Cart
                 .Include(c => c.CartItems)
+                .ThenInclude(ci => ci.Movie)
                 .FirstOrDefaultAsync(c => c.Email == email && c.UserId == userId);
+            var movie = cart!.CartItems.FirstOrDefault(ci => ci.Movie.Id == movieId);
 
             if(movie == null || cart == null)
             {
                 return null;
             }
-            var cartItem = cart.CartItems.FirstOrDefault(c => c.Id == movieId);
-            if(cartItem == null)
-            {
-                return null;
-            }
-            cartItem.Amount--;
-            if(cartItem.Amount == 0)
+            var cartItem = cart.CartItems.FirstOrDefault(c => c.MovieId == movieId);
+           
+            if(cartItem!.Amount == 1)
             {
                 _dbContext.CartItem.Remove(cartItem);
             }
             else
             {
-                _dbContext.CartItem.Entry(cartItem).State = EntityState.Modified;  
+                cartItem!.Amount--;
+                _dbContext.Cart.Entry(cart).State = EntityState.Modified;  
             }
             await _dbContext.SaveChangesAsync();
             return cart;
