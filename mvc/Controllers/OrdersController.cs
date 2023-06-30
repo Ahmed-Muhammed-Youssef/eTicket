@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using mvc.Data.ViewModels;
 using mvc.Interfaces;
 using mvc.Models;
@@ -38,6 +37,11 @@ namespace mvc.Controllers
             {
                 return View("NotFound");
             }
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> RemoveItemFromCart(int id)
+        {
+            var cart = await _orderService.RemoveMovieFromCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
             return RedirectToAction(nameof(Index));
         }
     }
