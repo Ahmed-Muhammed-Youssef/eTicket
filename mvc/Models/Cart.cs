@@ -13,5 +13,12 @@ namespace mvc.Models
         // Navigation Properties
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
+
+        // utility method
+        public decimal GetTotalPrice()
+        {
+            return CartItems.Sum(x => x.Price);
+        }
+
     }
 }
