@@ -39,7 +39,7 @@
                             <a class="text-danger" asp-controller="Orders" asp-action="RemoveItemFromCart">
                                 <i class="bi bi-cart-dash"></i>
                             </a>
-                            <a class="text-success" asp-controller="Orders" asp-action="AddItemFromCart">
+                            <a class="text-success" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@item.Movie.Id">
                                 <i class="bi bi-cart-plus"></i>
                             </a>
                         </td>
