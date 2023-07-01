@@ -15,6 +15,13 @@ namespace mvc.Controllers
             _cartService = cartService;
             _orderService = orderService;
         }
+        public async Task<IActionResult> List()
+        {
+            var orders = await _orderService.
+                GetUserOrdersAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+
+            return View(orders == null? new List<Order>(): orders);
+        }
         public async Task<IActionResult> Index()
         {
             
