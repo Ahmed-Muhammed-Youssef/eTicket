@@ -53,6 +53,23 @@
                     <ul class="navbar-nav">
                         @await Component.InvokeAsync("CartSummary")
                     </ul>
+                    @**@
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item dropdown">
+                            <button class="nav-link dropdown-toggle btn btn-outline-success" href="#"
+                                role="button" data-toggle="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-badge me-1"></i> @UserPlaceHolder.Email
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="List">
+                                    <i class="bi bi-list me-1"></i>Orders
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div>
+
+                    </div>
                 </div>
             </div>
         </nav>
