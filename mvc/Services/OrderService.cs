@@ -24,7 +24,8 @@ namespace mvc.Services
                 {
                     Amount = item.Amount,
                     Price = item.Price,
-                    MovieId = item.MovieId
+                    MovieId = item.MovieId,
+                    Movie = item.Movie
                 });
             }
             var order = new Order
