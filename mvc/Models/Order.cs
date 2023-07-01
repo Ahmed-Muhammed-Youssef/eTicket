@@ -11,5 +11,10 @@ namespace mvc.Models
         public int UserId { get; set; }
         // Navigation Propertt
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem> { };
+        // utility method
+        public decimal GetTotalPrice()
+        {
+            return OrderItems.Sum(x => x.Price);
+        }
     }
 }
