@@ -8,12 +8,12 @@ namespace mvc.Controllers
     public class OrdersController : Controller
     {
         private readonly ICartService _cartService;
-        private readonly IMovieService _movieService;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(ICartService cartService, IMovieService movieService)
+        public OrdersController(ICartService cartService, IOrderService orderService)
         {
             _cartService = cartService;
-            _movieService = movieService;
+            _orderService = orderService;
         }
         public async Task<IActionResult> Index()
         {
@@ -43,6 +43,16 @@ namespace mvc.Controllers
         {
             var cart = await _cartService.RemoveMovieFromCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var cart = await _cartService.GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            if(cart == null)
+            {
+                return View("NotFound");
+            }
+            var order = await _orderService.OrderAsync(cart);
+            return View("OrderCompleted");
         }
     }
 }
