@@ -7,18 +7,18 @@ namespace mvc.Controllers
 {
     public class OrdersController : Controller
     {
-        private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
         private readonly IMovieService _movieService;
 
-        public OrdersController(IOrderService orderService, IMovieService movieService)
+        public OrdersController(ICartService cartService, IMovieService movieService)
         {
-            _orderService = orderService;
+            _cartService = cartService;
             _movieService = movieService;
         }
         public async Task<IActionResult> Index()
         {
             
-            var cart = await _orderService.GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var cart = await _cartService.GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
             if(cart == null)
             {
                 cart = new Cart();
@@ -32,7 +32,7 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> AddToCart(int id)
         {
-            var cart = await _orderService.AddMovieToCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var cart = await _cartService.AddMovieToCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
             if(cart == null)
             {
                 return View("NotFound");
@@ -41,7 +41,7 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> RemoveItemFromCart(int id)
         {
-            var cart = await _orderService.RemoveMovieFromCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var cart = await _cartService.RemoveMovieFromCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
             return RedirectToAction(nameof(Index));
         }
     }

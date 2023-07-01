@@ -6,14 +6,14 @@ namespace mvc.Data.ViewComponents
 {
     public class CartSummary : ViewComponent
     {
-        private readonly IOrderService _orderService;
-        public CartSummary(IOrderService orderService)
+        private readonly ICartService _cartService;
+        public CartSummary(ICartService cartService)
         {
-            _orderService = orderService;
+            _cartService = cartService;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var cart = await  _orderService
+            var cart = await  _cartService
                 .GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
             if(cart == null)
             {
