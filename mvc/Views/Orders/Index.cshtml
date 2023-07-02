@@ -1,6 +1,6 @@
 ﻿@model CartVM
 @{
-    ViewData["Title"] = "Cart Summary"; 
+    ViewData["Title"] = "Cart Summary";
 }
 <div class="row">
     <div class="col-md-8 offset-2">
@@ -55,13 +55,14 @@
                 </tr>
             </tfoot>
         </table>
-        <div class="text-center">
+        <div class="text-end">
             <div class="btn-group">
-                <a class="btn btn-success" asp-action="CompleteOrder">
+               @* <a class="btn btn-success" asp-action="CompleteOrder">
                     Complete Order
-                </a>
+                </a>*@
+                <div id="paypal-btn"></div>
                 <a class="btn btn-outline-success" asp-controller="Movies" asp-action="Index">
-                   Add more items
+                    Add more items
                 </a>
 
             </div>
@@ -69,3 +70,38 @@
     </div>
 
 </div>
+@section Scripts{
+    <script src="https://www.paypalobjects.com/api/checkout.js">
+    
+    </script>
+
+    <script>
+        let _total = @Html.Raw(Model.Total);
+        paypal.Button.render({
+            env: 'sandbox',
+            client: {
+                sandbox: 'AZDSTT6SfF4goNQUmXRjhUFwMJ2eoibtwNfV2bJetnrxrM46bn0VR9sNSS_988jx7lvRZgKgBrxfgrXg'
+            },
+            // customize button
+            locale: 'en_US',
+            style: {
+                size: 'small',
+                color: 'gold',
+                shape: 'pill'
+            },
+            commit: true,
+            // set up payment
+            payment: function(data, actions){
+                return actions.payment.create({
+                    transactions:[{amount:{total: _total, currency: 'USD'}}]
+                });
+            },
+            // execute payment
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute().then(function(){
+                    window.location.href = '@Url.Action("CompleteOrder", "Orders")';
+                });
+            }
+        }, '#paypal-btn')
+    </script>
+}

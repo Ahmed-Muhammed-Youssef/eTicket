@@ -19,6 +19,13 @@ builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
+/*builder.Services.AddCors(options => 
+    options.AddPolicy( "AnySiteCorsPolicy",
+        policy =>
+        {
+            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        }
+));*/
 
 
 var app = builder.Build();
@@ -31,6 +38,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// app.UseCors("AnySiteCorsPolicy");
 
 app.UseHttpsRedirection();
 
