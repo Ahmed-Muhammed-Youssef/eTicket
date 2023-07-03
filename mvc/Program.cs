@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
@@ -17,9 +18,13 @@ builder.Services.AddDbContext<AppDbContext>(options => {
 // Identity Service
 builder.Services
     .AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddUserManager<AppUser>()
-    .AddRoleManager<IdentityRole>();
+    .AddEntityFrameworkStores<AppDbContext>();
+
+// Authentication and Authorization
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+});
 
 // my services
 builder.Services.AddScoped<IActorService, ActorService>();
@@ -56,6 +61,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
