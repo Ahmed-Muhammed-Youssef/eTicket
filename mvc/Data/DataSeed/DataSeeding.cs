@@ -1,4 +1,7 @@
-﻿using mvc.Data.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using mvc.Data.Enums;
+using mvc.Data.Static;
 using mvc.Models;
 
 namespace mvc.Data.DataSeed
@@ -7,7 +10,7 @@ namespace mvc.Data.DataSeed
     {
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
-            using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 try
@@ -16,7 +19,7 @@ namespace mvc.Data.DataSeed
 
                     // cinema
 
-                    if (!context.Cinema.Any())
+                    if (!context!.Cinema.Any())
                     {
                         context.Cinema.AddRange(new List<Cinema>()
                         {
@@ -309,11 +312,70 @@ namespace mvc.Data.DataSeed
                         });
                         context.SaveChanges();
                     }
-                
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new Exception("Seeding data error", ex);
+                }
+            }
+        }
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder, IConfiguration configuration)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
+                try
+                {
+                    // Add Roles
+                    if (await roleManager!.RoleExistsAsync(UserRolesValues.Admin) == false)
+                    {
+                        await roleManager!.CreateAsync(new IdentityRole(UserRolesValues.Admin));
+                    }
+                    if (await roleManager!.RoleExistsAsync(UserRolesValues.User) == false)
+                    {
+                        await roleManager!.CreateAsync(new IdentityRole(UserRolesValues.User));
+                    }
+
+
+                    // Add users
+                    var adminUser = await userManager!.FindByEmailAsync(configuration.GetSection("AdminUser")["Email"]!);
+                    if(adminUser == null) 
+                    {
+                        adminUser = new AppUser()
+                        {
+                            FirstName = configuration.GetSection("AdminUser")["FirstName"]!,
+                            LastName = configuration.GetSection("AdminUser")["LastName"]!,
+                            UserName = configuration.GetSection("AdminUser")["UserName"]!,
+                            Email = configuration.GetSection("AdminUser")["Email"]!,
+                            EmailConfirmed = true
+                        };
+                        await userManager.CreateAsync(adminUser, configuration.GetSection("AdminUser")["Password"]!);
+                        await userManager.AddToRoleAsync(adminUser, UserRolesValues.Admin);
+                    }
+
+                    var testUser = await userManager!.FindByEmailAsync(configuration.GetSection("TestUser")["Email"]!);
+                    if (testUser == null)
+                    {
+                        testUser = new AppUser()
+                        {
+                            FirstName = configuration.GetSection("TestUser")["FirstName"]!,
+                            LastName = configuration.GetSection("TestUser")["LastName"]!,
+                            UserName = configuration.GetSection("TestUser")["UserName"]!,
+                            Email = configuration.GetSection("TestUser")["Email"]!,
+                            EmailConfirmed = true
+                        };
+                        await userManager.CreateAsync(testUser, configuration.GetSection("TestUser")["Password"]!);
+                        await userManager.AddToRoleAsync(testUser, UserRolesValues.User);
+                    }
+
+                    await context!.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Seeding users and roles error", ex);
                 }
             }
         }

@@ -31,6 +31,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 var app = builder.Build();
 // seed the database if it's empty
 DataSeeding.Seed(app);
+DataSeeding.SeedUsersAndRolesAsync(app, builder.Configuration).Wait();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
