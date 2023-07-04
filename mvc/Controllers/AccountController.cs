@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
+using mvc.Data.Static;
 using mvc.Data.ViewModels;
 using mvc.Models;
+using System.Configuration;
 
 namespace mvc.Controllers
 {
@@ -25,11 +27,7 @@ namespace mvc.Controllers
             return View();
         }
         // GET: Account/Login
-        public IActionResult Login()
-        {
-            var loginVm = new LoginVM();
-            return View(loginVm);
-        }
+        public IActionResult Login() => View(new LoginVM());
 
         // POST: Account/Login
         [HttpPost]
@@ -65,5 +63,46 @@ namespace mvc.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+        // GET: Account/Register
+        [HttpGet]
+        public IActionResult Register() => View(new RegisterVM());
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM registerVM)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(registerVM);
+            }
+            var u = await _userManager.FindByEmailAsync(registerVM.Email);
+            if(u != null)
+            {
+                TempData["Error"] = "This email is already taken";
+                return View(registerVM);
+            }
+            var user = new AppUser()
+            {
+                FirstName = registerVM.FirstName,
+                LastName = registerVM.LastName,
+                UserName = registerVM.UserName,
+                Email = registerVM.Email,
+                EmailConfirmed = true,
+            };
+            var res = await _userManager.CreateAsync(user, registerVM.Password);
+            if(!res.Succeeded)
+            {
+                TempData["Error"] = string.Join("\n", res.Errors.Select(e=>e.Description));
+                return View(registerVM);
+            }
+            var roleAssignRes = await _userManager.AddToRoleAsync(user, UserRolesValues.User);
+            if(!roleAssignRes.Succeeded) 
+            {
+                TempData["Error"] = string.Join(" - ", roleAssignRes.Errors.Select(e => e.Description));
+                return View(registerVM);
+            }
+            return View("RegisterCompleted");
+        }
+
     }
 }
