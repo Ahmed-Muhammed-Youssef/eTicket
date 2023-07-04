@@ -24,11 +24,14 @@ namespace mvc.Controllers
         {
             return View();
         }
+        // GET: Account/Login
         public IActionResult Login()
         {
             var loginVm = new LoginVM();
             return View(loginVm);
         }
+
+        // POST: Account/Login
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
@@ -52,6 +55,15 @@ namespace mvc.Controllers
                 return View(loginVM);
             }
             return RedirectToAction(actionName: "Index", controllerName: "Movies");
+        }
+
+        // only signed-in useres should have access to this method
+
+        // GET: Account/Logout
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }
