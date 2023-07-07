@@ -12,9 +12,18 @@ namespace mvc.Data.Configurations
             builder.Property(c => c.Email)
                 .IsRequired();
 
+
+            // Relationships
+
             builder.HasMany(c => c.CartItems)
                 .WithOne(ci => ci.Cart)
                 .HasForeignKey(ci => ci.CartId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(c => c.AppUser)
+                .WithOne(u => u.Cart)
+                .HasForeignKey<Cart>(c => c.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
