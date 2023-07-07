@@ -12,11 +12,18 @@ namespace mvc.Data.Configurations
             builder.Property(o => o.Email)
                 .IsRequired();
 
+            // Relationships
+
             builder.HasMany(o => o.OrderItems)
                 .WithOne(oi => oi.Order)
                 .HasForeignKey(oi => oi.OrderId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(o => o.AppUser)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .IsRequired();
 
         }
     }
