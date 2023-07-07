@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using mvc.Data.Static
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,23 +27,27 @@
                                 <i class="bi-film me-1"></i>Movies
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#"
-                            role="button" data-toggle="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-gear me-1"></i>Management
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Cinemas" asp-action="Index">
-                                    <i class="bi bi-camera-reels me-1"></i>Cinemas
+                        @if (User!.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+                        {
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                role="button" data-toggle="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-gear me-1"></i>Management
                                 </a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Actors" asp-action="Index">
-                                    <i class="bi bi-person-square me-1"></i>Actors
-                                </a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Producers" asp-action="Index">
-                                    <i class="bi bi-headset me-1"></i>Producers
-                                </a>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Cinemas" asp-action="Index">
+                                        <i class="bi bi-camera-reels me-1"></i>Cinemas
+                                    </a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Actors" asp-action="Index">
+                                        <i class="bi bi-person-square me-1"></i>Actors
+                                    </a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Producers" asp-action="Index">
+                                        <i class="bi bi-headset me-1"></i>Producers
+                                    </a>
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <form class="input-group my-2 my-lg-0" style="width: 300px; padding-right: 25px;" asp-controller="Movies" asp-action="Filter">
                         <input name="searchString" type="text" class="form-control"
