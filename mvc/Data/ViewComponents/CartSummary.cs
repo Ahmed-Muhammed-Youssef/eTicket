@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mvc.Interfaces;
-using mvc.Models;
+using System.Security.Claims;
 
 namespace mvc.Data.ViewComponents
 {
@@ -13,8 +13,11 @@ namespace mvc.Data.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            var userId = UserClaimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var userEmail = UserClaimsPrincipal.FindFirst(ClaimTypes.Email)!.Value;
+
             var cart = await  _cartService
-                .GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+                .GetUserCartAsync(userId, userEmail);
             if(cart == null)
             {
                 return View(0);
