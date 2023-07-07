@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mvc.Data;
-using mvc.Data.Base;
 using mvc.Interfaces;
 using mvc.Models;
 
@@ -14,14 +13,27 @@ namespace mvc.Services
         {
             _dbContext = dbContext;
         }
-        public async Task<Cart?> AddMovieToCartAsync(int movieId, int userId, string email)
+        public async Task<Cart?> AddMovieToCartAsync(int movieId, string userId, string email)
         {
-            var cart = await _dbContext.Cart
+            var cartTask = _dbContext.Cart
                 .Where(c => c.UserId == userId && c.Email == email)
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync();
-            var movie = await _dbContext.Movie.FirstOrDefaultAsync(m => m.Id == movieId);
-            if (movie == null)
+
+            var user = _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            var movie = _dbContext.Movie.FirstOrDefaultAsync(m => m.Id == movieId);
+
+            await Task.WhenAll(cartTask, user, movie);
+
+            var cart = cartTask.Result;
+
+            if(user.Result == null)
+            {
+                return null;
+            }
+
+            if (movie.Result == null)
             {
                 return cart;
             }
@@ -29,8 +41,8 @@ namespace mvc.Services
             {
                 MovieId = movieId,
                 Amount = 1,
-                Price = movie.Price,
-                Movie = movie
+                Price = movie.Result.Price,
+                Movie = movie.Result
             };
             if (cart != null)
             {
@@ -38,7 +50,7 @@ namespace mvc.Services
                 if (oldCartItem != null)
                 {
                     oldCartItem.Amount++;
-                    oldCartItem.Price += movie.Price;
+                    oldCartItem.Price += movie.Result.Price;
                 }
                 else
                 {
@@ -46,21 +58,22 @@ namespace mvc.Services
                 }
                 _dbContext.Cart.Entry(cart).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
-                return cart;
+                return cartTask.Result;
             }
             // if the user didn't create any carts before.
             cart = new Cart
             {
                 CartItems = new List<CartItem> { cartItem },
                 UserId = userId,
-                Email = email
+                Email = email,
+                AppUser = user.Result
             };
             cartItem.Cart = cart;
             await _dbContext.Cart.AddAsync(cart);
             await _dbContext.SaveChangesAsync();
             return cart;
         }
-        public async Task<Cart?> RemoveMovieFromCartAsync(int movieId, int userId, string email)
+        public async Task<Cart?> RemoveMovieFromCartAsync(int movieId, string userId, string email)
         {
             var cart = await _dbContext.Cart
                 .Include(c => c.CartItems)
@@ -86,7 +99,7 @@ namespace mvc.Services
             await _dbContext.SaveChangesAsync();
             return cart;
         }
-        public async Task<Cart?> GetUserCartAsync(int userId, string email)
+        public async Task<Cart?> GetUserCartAsync(string userId, string email)
         {
             var cart = await _dbContext.Cart
                .Where(c => c.UserId == userId && c.Email == email)
