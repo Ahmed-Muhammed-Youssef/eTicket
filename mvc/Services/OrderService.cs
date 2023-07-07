@@ -32,7 +32,8 @@ namespace mvc.Services
             {
                 OrderItems = orderItems,
                 Email = cart.Email,
-                UserId = cart.UserId
+                UserId = cart.UserId,
+                AppUser = cart.AppUser
             };
             await _dbContext.Order.AddAsync(order);
             _dbContext.Cart.Remove(cart);
@@ -41,7 +42,7 @@ namespace mvc.Services
             return order;
         }
     
-        public async Task<List<Order>> GetUserOrdersAsync(int userId, string email)
+        public async Task<List<Order>> GetUserOrdersAsync(string userId, string email)
         {
             var orders = await _dbContext.Order
                 .Include(o => o.OrderItems)
