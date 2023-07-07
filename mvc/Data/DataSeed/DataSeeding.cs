@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using mvc.Data.Enums;
 using mvc.Data.Static;
 using mvc.Models;
