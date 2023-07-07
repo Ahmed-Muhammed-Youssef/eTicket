@@ -8,9 +8,10 @@ namespace mvc.Models
         public string Email { get; set; } = "";
 
         // Foreign Keys
-        public int UserId { get; set; }
-        
+        public string UserId { get; set; } = "";
+
         // Navigation Properties
+        public AppUser AppUser { get; set; } = new AppUser();
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
 
