@@ -2,6 +2,7 @@
 using mvc.Data.ViewModels;
 using mvc.Interfaces;
 using mvc.Models;
+using System.Security.Claims;
 
 namespace mvc.Controllers
 {
@@ -17,15 +18,26 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> List()
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
+            if (userId == null || userEmail == null)
+            {
+                return View("NotFound");
+            }
             var orders = await _orderService.
-                GetUserOrdersAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+                GetUserOrdersAsync(userId, userEmail);
 
             return View(orders == null? new List<Order>(): orders);
         }
         public async Task<IActionResult> Index()
         {
-            
-            var cart = await _cartService.GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
+            if (userId == null || userEmail == null)
+            {
+                return View("NotFound");
+            }
+            var cart = await _cartService.GetUserCartAsync(userId, userEmail);
             if(cart == null)
             {
                 cart = new Cart();
@@ -39,7 +51,13 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> AddToCart(int id)
         {
-            var cart = await _cartService.AddMovieToCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
+            if (userId == null || userEmail == null)
+            {
+                return View("NotFound");
+            }
+            var cart = await _cartService.AddMovieToCartAsync(id, userId, userEmail);
             if(cart == null)
             {
                 return View("NotFound");
@@ -48,12 +66,25 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> RemoveItemFromCart(int id)
         {
-            var cart = await _cartService.RemoveMovieFromCartAsync(id, UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
+
+            if(userId == null || userEmail == null)
+            {
+                return View("NotFound");
+            }
+            var cart = await _cartService.RemoveMovieFromCartAsync(id, userId, userEmail);
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> CompleteOrder()
         {
-            var cart = await _cartService.GetUserCartAsync(UserPlaceHolder.UserId, UserPlaceHolder.Email);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var userEmail = User.FindFirst(ClaimTypes.Email)!.Value;
+            if (userId == null || userEmail == null)
+            {
+                return View("NotFound");
+            }
+            var cart = await _cartService.GetUserCartAsync(userId, userEmail);
             if(cart == null)
             {
                 return View("NotFound");
