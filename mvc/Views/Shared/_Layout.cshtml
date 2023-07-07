@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<AppUser> SignInManager
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -52,40 +50,7 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
-                    @if(SignInManager.IsSignedIn(User))
-                    {
-                        <ul class="navbar-nav">
-                            @await Component.InvokeAsync("CartSummary")
-                        </ul>
-                        <ul class="navbar-nav ms-3">
-                            <li class="nav-item dropdown">
-                                <button class="nav-link dropdown-toggle btn btn-outline-success" href="#"
-                                    role="button" data-toggle="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-badge me-1"></i> @User!.Identity!.Name
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Orders" asp-action="List">
-                                        <i class="bi bi-list me-1"></i>Orders
-                                    </a>
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
-                                        <i class="bi bi-box-arrow-right me-1"></i>Logout
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <a class="btn btn-outline-success my-2 me-2 my-sm-0" 
-                            asp-controller="Account" asp-action="Login">
-                            <i class="bi bi-box-arrow-in-right me-1"></i>Login
-                        </a>
-                        <a class="btn btn-success my-2 my-sm-0"
-                           asp-controller="Account" asp-action="Register">
-                            Register
-                        </a>
-                    }
-                   
+                    <partial name="_Identity" />
                 </div>
             </div>
         </nav>
