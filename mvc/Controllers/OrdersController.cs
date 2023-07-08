@@ -29,6 +29,16 @@ namespace mvc.Controllers
 
             return View(orders == null? new List<Order>(): orders);
         }
+
+        public async Task<IActionResult> ListAll()
+        {
+            
+            
+            var orders = await _orderService.
+                GetOrdersWithUsersAsync();
+
+            return View(orders == null ? new List<Order>() : orders);
+        }
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;

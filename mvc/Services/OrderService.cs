@@ -18,7 +18,12 @@ namespace mvc.Services
         public async Task<Order> OrderAsync(Cart cart)
         {
             var orderItems = new List<OrderItem>();
-            foreach(var item in cart.CartItems)
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == cart.UserId);
+            if(user == null)
+            {
+                return new Order();
+            }
+            foreach (var item in cart.CartItems)
             {
                 orderItems.Add( new OrderItem
                 {
@@ -33,7 +38,7 @@ namespace mvc.Services
                 OrderItems = orderItems,
                 Email = cart.Email,
                 UserId = cart.UserId,
-                AppUser = cart.AppUser
+                AppUser = user
             };
             await _dbContext.Order.AddAsync(order);
             _dbContext.Cart.Remove(cart);
@@ -48,6 +53,15 @@ namespace mvc.Services
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Movie)
                 .Where(o => o.UserId == userId && o.Email == email)
+                .ToListAsync();
+            return orders;
+        }
+        public async Task<List<Order>> GetOrdersWithUsersAsync()
+        {
+            var orders = await _dbContext.Order
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Movie)
+                .Include(o => o.AppUser)
                 .ToListAsync();
             return orders;
         }
