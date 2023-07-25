@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using mvc.Data;
 using mvc.Data.Static;
 using mvc.Data.ViewModels;
 using mvc.Models;
-using System.Configuration;
 
 namespace mvc.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly AppDbContext _dbContext;
+
 
         public AccountController(UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager, AppDbContext dbContext)
+            SignInManager<AppUser> signInManager)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._dbContext = dbContext;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {

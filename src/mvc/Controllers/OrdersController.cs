@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using mvc.Data.Static;
 using mvc.Data.ViewModels;
 using mvc.Interfaces;
 using mvc.Models;
@@ -6,6 +8,7 @@ using System.Security.Claims;
 
 namespace mvc.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly ICartService _cartService;
@@ -29,7 +32,7 @@ namespace mvc.Controllers
 
             return View(orders == null? new List<Order>(): orders);
         }
-
+        [Authorize(Roles = UserRolesValues.Admin)]
         public async Task<IActionResult> ListAll()
         {
             
@@ -39,6 +42,7 @@ namespace mvc.Controllers
 
             return View(orders == null ? new List<Order>() : orders);
         }
+        
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;

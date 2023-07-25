@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using mvc.Data.Static;
 using mvc.Interfaces;
 using mvc.Models;
-using mvc.Services;
 
 namespace mvc.Controllers
 {
+    [Authorize(Roles = UserRolesValues.Admin)]
     public class CinemasController : Controller
     {
         private readonly ICinemaService _cinemaService;
@@ -18,7 +20,7 @@ namespace mvc.Controllers
             var cinemas = await _cinemaService.GetAllAsync();
             return View(cinemas);
         }
-
+        [AllowAnonymous]
         // GET: Cinemas/Details/{id}
         public async Task<IActionResult> Details(int id)
         {

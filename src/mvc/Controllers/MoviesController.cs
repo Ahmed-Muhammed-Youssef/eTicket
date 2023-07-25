@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using mvc.Data;
+using mvc.Data.Static;
 using mvc.Data.ViewModels;
 using mvc.Interfaces;
-using mvc.Models;
-using mvc.Services;
 
 namespace mvc.Controllers
 {
+    [Authorize(Roles = UserRolesValues.Admin)]
     public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
@@ -23,12 +22,13 @@ namespace mvc.Controllers
             _actorService = actorService;
             _producerService = producerService;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var movies = await _movieService.GetAllAsync(n => n.Cinema);
             return View(movies);
         }
-
+        [AllowAnonymous]
         // GET: Movies/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
@@ -129,7 +129,7 @@ namespace mvc.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+        [AllowAnonymous]
         public async Task<IActionResult> Filter(string searchString)
         {
             var movies = await _movieService.GetAllAsync(n => n.Cinema);

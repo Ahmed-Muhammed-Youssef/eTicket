@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using mvc.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using mvc.Data.Static;
 using mvc.Interfaces;
 using mvc.Models;
-using mvc.Services;
 
 namespace mvc.Controllers
 {
+    [Authorize(Roles = UserRolesValues.Admin)]
     public class ProducersController : Controller
     {
         private readonly IProducerService _producerService;

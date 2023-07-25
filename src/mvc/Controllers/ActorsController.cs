@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using mvc.Data.Static;
 using mvc.Interfaces;
 using mvc.Models;
 
 namespace mvc.Controllers
 {
+    [Authorize(Roles = UserRolesValues.Admin)]
     public class ActorsController : Controller
     {
         private readonly IActorService _actorService;
@@ -19,11 +22,13 @@ namespace mvc.Controllers
             var actors = await _actorService.GetAllAsync();
             return View(actors);
         }
+        
         // GET: Actors/Create
         public IActionResult Create()
         {
             return View();
         }
+        
         [HttpPost]
         public async Task<IActionResult> Create([Bind("FullName, ProfilePictureUrl, Bio")]Actor actor)
         {
@@ -34,6 +39,7 @@ namespace mvc.Controllers
             await _actorService.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
+        [AllowAnonymous]
         // GET: Actors/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
