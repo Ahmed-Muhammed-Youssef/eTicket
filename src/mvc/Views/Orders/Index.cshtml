@@ -56,15 +56,11 @@
             </tfoot>
         </table>
         <div class="text-end">
-            <div class="btn-group">
-               @* <a class="btn btn-success" asp-action="CompleteOrder">
-                    Complete Order
-                </a>*@
-                <div id="paypal-btn"></div>
+            <div>
+                <div class="btn me-4 float-start" id="paypal-btn"></div>
                 <a class="btn btn-outline-success" asp-controller="Movies" asp-action="Index">
                     Add more items
                 </a>
-
             </div>
         </div>
     </div>
@@ -72,7 +68,7 @@
 </div>
 @section Scripts{
     <script src="https://www.paypalobjects.com/api/checkout.js">
-    
+
     </script>
 
     <script>
@@ -87,18 +83,19 @@
             style: {
                 size: 'small',
                 color: 'gold',
-                shape: 'pill'
+                shape: 'rect'
+
             },
             commit: true,
             // set up payment
-            payment: function(data, actions){
+            payment: function (data, actions) {
                 return actions.payment.create({
-                    transactions:[{amount:{total: _total, currency: 'USD'}}]
+                    transactions: [{ amount: { total: _total, currency: 'USD' } }]
                 });
             },
             // execute payment
             onAuthorize: function (data, actions) {
-                return actions.payment.execute().then(function(){
+                return actions.payment.execute().then(function () {
                     window.location.href = '@Url.Action("CompleteOrder", "Orders")';
                 });
             }
