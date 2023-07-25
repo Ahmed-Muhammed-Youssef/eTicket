@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Data.DataSeed;
+using mvc.Data.Static;
 using mvc.Interfaces;
 using mvc.Models;
 using mvc.Services;
@@ -18,13 +19,15 @@ builder.Services.AddDbContext<AppDbContext>(options => {
 // Identity Service
 builder.Services
     .AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddRoleValidator<RoleValidator<IdentityRole>>();
 
 // Authentication and Authorization
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
+builder.Services.AddAuthorization();
 
 // my services
 builder.Services.AddScoped<IActorService, ActorService>();
