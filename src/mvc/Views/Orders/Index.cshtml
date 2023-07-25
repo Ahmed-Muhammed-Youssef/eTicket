@@ -68,7 +68,7 @@
 </div>
 @section Scripts{
     <script src="https://www.paypalobjects.com/api/checkout.js">
-
+    
     </script>
 
     <script>
@@ -84,18 +84,18 @@
                 size: 'small',
                 color: 'gold',
                 shape: 'rect'
-
+               
             },
             commit: true,
             // set up payment
-            payment: function (data, actions) {
+            payment: function(data, actions){
                 return actions.payment.create({
-                    transactions: [{ amount: { total: _total, currency: 'USD' } }]
+                    transactions:[{amount:{total: _total, currency: 'USD'}}]
                 });
             },
             // execute payment
             onAuthorize: function (data, actions) {
-                return actions.payment.execute().then(function () {
+                return actions.payment.execute().then(function(){
                     window.location.href = '@Url.Action("CompleteOrder", "Orders")';
                 });
             }
