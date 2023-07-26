@@ -15,7 +15,7 @@ namespace mvc.Services
             _dbContext = dbContext;
         }
 
-        public async Task<Order> OrderAsync(Cart cart)
+        public async Task<Order> OrderAsync(Cart cart, string transactionKey)
         {
             var orderItems = new List<OrderItem>();
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == cart.UserId);
@@ -37,6 +37,7 @@ namespace mvc.Services
             {
                 OrderItems = orderItems,
                 Email = cart.Email,
+                TransactionKey = transactionKey,
                 UserId = cart.UserId,
                 AppUser = user
             };
