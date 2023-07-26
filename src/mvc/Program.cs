@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using mvc.Data;
 using mvc.Data.DataSeed;
-using mvc.Data.Static;
+using mvc.Helpers.Helpers;
 using mvc.Interfaces;
 using mvc.Models;
 using mvc.Services;
@@ -36,6 +36,12 @@ builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddSingleton(x => 
+    new PaypalClient(
+        builder.Configuration.GetSection("PayPal")["ClientId"]!,
+        builder.Configuration.GetSection("PayPal")["ClientSecret"]!,
+        builder.Configuration.GetSection("PayPal")["Mode"]!
+    ));
 /*builder.Services.AddCors(options => 
     options.AddPolicy( "AnySiteCorsPolicy",
         policy =>
