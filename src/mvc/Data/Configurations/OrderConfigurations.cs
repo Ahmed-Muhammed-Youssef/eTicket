@@ -11,6 +11,8 @@ namespace mvc.Data.Configurations
             builder.HasKey(o => o.Id);
             builder.Property(o => o.Email)
                 .IsRequired();
+            builder.Property(o => o.TransactionKey)
+                .IsRequired();
 
             // Relationships
 

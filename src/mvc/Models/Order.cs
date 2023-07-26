@@ -6,6 +6,7 @@ namespace mvc.Models
     {
         public int Id { get; set; }
         public string Email { get; set; } = "";
+        public string TransactionKey { get; set; } = "";
 
         // Foreign key
         public string UserId { get; set; } = "";
