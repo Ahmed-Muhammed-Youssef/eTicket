@@ -42,6 +42,7 @@ builder.Services.AddSingleton(x =>
         builder.Configuration.GetSection("PayPal")["ClientSecret"]!,
         builder.Configuration.GetSection("PayPal")["Mode"]!
     ));
+builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 /*builder.Services.AddCors(options => 
     options.AddPolicy( "AnySiteCorsPolicy",
         policy =>
