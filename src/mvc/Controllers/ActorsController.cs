@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using mvc.Data.Static;
+using mvc.Data.ViewModels;
 using mvc.Interfaces;
 using mvc.Models;
 
@@ -10,16 +14,18 @@ namespace mvc.Controllers
     public class ActorsController : Controller
     {
         private readonly IActorService _actorService;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ActorsController(IActorService actorService)
+        public ActorsController(IActorService actorService, IWebHostEnvironment hostEnvironment)
         {
             this._actorService = actorService;
+            this._hostEnvironment = hostEnvironment;
         }
 
         // GET: Actors/Index
         public async Task<IActionResult> Index()
         {
-            var actors = await _actorService.GetAllAsync();
+            var actors = await _actorService.GetAllAsync(a => a.Image);
             return View(actors);
         }
         
@@ -30,13 +36,19 @@ namespace mvc.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("FullName, ProfilePictureUrl, Bio")]Actor actor)
+        public async Task<IActionResult> Create(ActorVM actorVM)
         {
+            var actor = new Actor()
+            {
+                FullName = actorVM.FullName,
+                Bio = actorVM.Bio,
+                Image = new Image() { ImageFile = actorVM.ImageFile }
+            };
             if (!ModelState.IsValid)
             {
                 return View(actor);
             }
-            await _actorService.AddAsync(actor);
+            await _actorService.AddActorWithImageUplodaing(actor);
             return RedirectToAction(nameof(Index));
         }
         [AllowAnonymous]

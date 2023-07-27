@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using mvc.Data.Base;
+﻿using mvc.Data.Base;
 using mvc.Models;
 
 namespace mvc.Interfaces
 {
     public interface IActorService : IEntityBaseRepository<Actor>
     {
-
+        public Task<Actor> AddActorWithImageUplodaing(Actor actor);
     }
 }
