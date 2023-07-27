@@ -1,4 +1,4 @@
-﻿@model Actor
+﻿@model ActorVM
 @{
     ViewData["Title"] = "Actors";
 }
@@ -11,18 +11,15 @@
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="Create" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger">
-
-                    </div>    
+                <form enctype="multipart/form-data" asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
                     <div class="form-group text-center my-2">
                         <img class="rounded-circle" style="max-width: 150px;" id="ProfilePicturePreview" />
                     </div>
                     <div class="form-group my-2">
-                        <label asp-for="ProfilePictureUrl" class="control-label">
-                        </label>
-                        <input asp-for="ProfilePictureUrl" class="form-control" />
-                        <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+                        <label asp-for="ImageFile" class="form-label">Actor's image</label>
+                        <input asp-for="ImageFile" id="imgInp" accept="image/*" class="form-control" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
                     </div>
                     <div class="form-group my-2">
                         <label asp-for="FullName" class="control-label">
@@ -48,6 +45,14 @@
 
 @section Scripts {
     <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                ProfilePicturePreview.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+    @*<script>
         $(document).ready(function () {
             var output = document.getElementById('ProfilePicturePreview');
             output.src = $("#ProfilePictureUrl").val();
@@ -56,5 +61,5 @@
             var output = document.getElementById('ProfilePicturePreview');
             output.src = $(this).val();
         })
-    </script>
+    </script>*@
 }
