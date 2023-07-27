@@ -16,6 +16,7 @@ namespace mvc.Data
         public DbSet<OrderItem> OrderItem { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<CartItem> CartItem { get; set; }
+        public DbSet<Image> Image { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -30,6 +31,7 @@ namespace mvc.Data
             modelBuilder.ApplyConfiguration(new OrderItemConfigurations());
             modelBuilder.ApplyConfiguration(new CartConfigurations());
             modelBuilder.ApplyConfiguration(new CartItemConfigurations());
+            modelBuilder.ApplyConfiguration(new ImageConfigurations());
             base.OnModelCreating(modelBuilder);
         }
     }
