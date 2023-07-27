@@ -20,7 +20,12 @@ namespace mvc.Models
         [Required]
         public string? Bio { get; set; }
 
+        // Foreign Keys
+
+        public int ImageId { get; set; }
+
         // Navigation Properties
         public IEnumerable<ActorMovie>? ActorsMovies { get; set; }
+        public Image Image { get; set; } = Image.DefaultImageFactory();
     }
 }
