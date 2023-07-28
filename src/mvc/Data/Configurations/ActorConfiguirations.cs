@@ -13,7 +13,6 @@ namespace mvc.Data.Configurations
             // properties
             builder.Property(a => a.Id).IsRequired();
             builder.Property(a => a.FullName).IsRequired();
-            builder.Property(a => a.ProfilePictureUrl).IsRequired();
             builder.Property(a => a.Bio).IsRequired();
 
            
