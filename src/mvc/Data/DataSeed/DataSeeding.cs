@@ -56,42 +56,60 @@ namespace mvc.Data.DataSeed
                         context.SaveChanges();
 
                     }
+                   
                     if (!context.Actor.Any())
                     {
-                        context.Actor.AddRange(new List<Actor>()
-                        {
+                        context.Actor.AddRange(new List<Actor>(){
                             new Actor()
                             {
-                                FullName = "Actor 1",
-                                Bio = "This is the Bio of the first actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/actors/actor-1.jpeg"
-
+                                FullName = "Ryan Thomas Gosling",
+                                Bio = "Canadian actor who is Prominent in both independent film and major studio features of varying genres, his films have accrued a worldwide box office gross of over 1.9 billion USD.",
+                                Image = new Image() { ImagePath = "images/test/actor-ryan-gosling.webp" }
                             },
                             new Actor()
                             {
-                                FullName = "Actor 2",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/actors/actor-2.jpeg"
+                                FullName = "Matt LeBlanc",
+                                Bio = "American actor garnered global recognition with his portrayal of Joey Tribbiani in the NBC sitcom Friends and in its spin-off series, Joey. For his work on Friends, LeBlanc received three nominations at the Primetime Emmy Awards. He has also starred as a fictionalized version of himself in Episodes (2011–2017), for which he won a Golden Globe Award and received four additional Emmy Award nominations. He co-hosted Top Gear from 2016 to 2019. From 2016 to 2020, he played patriarch Adam Burns in the CBS sitcom Man with a Plan.",
+                                Image = new Image { ImagePath = "images/test/actorMatt-LeBlanc-232420843.jpeg" }
                             },
                             new Actor()
                             {
-                                FullName = "Actor 3",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/actors/actor-3.jpeg"
+                                FullName = "Margot Robbie",
+                                Bio = "Australian actress and producer who is Known for her work in both blockbuster and independent films, she has received various accolades, including nominations for two Academy Awards, four Golden Globe Awards, and five British Academy Film Awards.",
+                                Image = new Image { ImagePath = "images/test/actor-margot.jpg" }
                             },
                             new Actor()
                             {
-                                FullName = "Actor 4",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/actors/actor-4.jpeg"
+                                FullName = "Michael Cera",
+                                Bio = "Canadian actor who is known for his awkward, offbeat characters in coming of age comedy films and for portraying George Michael Bluth in the sitcom Arrested Development. He is also known for portraying Brother Bear in The Berenstain Bears.",
+                                Image = new Image { ImagePath = "images/test/actor-michael.jpg" }
                             },
                             new Actor()
                             {
-                                FullName = "Actor 5",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/actors/actor-5.jpeg"
+                                FullName = "Will Ferrell",
+                                Bio = "American actor, comedian, writer, and producer. Ferrell is known for his leading man roles in comedy films and for his work as a television producer. He has earned four Emmy Awards and in 2011 was honored with the Mark Twain Prize for American Humor.",
+                                Image = new Image { ImagePath = "images/test/actor-will-ferrell.jpg" }
+                            },
+                            new Actor()
+                            {
+                                FullName = "Cillian Murphy",
+                                Bio = "Irish actor who made his professional debut in Enda Walsh's 1996 play Disco Pigs, a role he later reprised in the 2001 screen adaptation.",
+                                Image = new Image { ImagePath = "images/test/actor-Cillian-Murphy.jpg" }
+                            },
+                            new Actor()
+                            {
+                                FullName = "Robert Downey Jr.",
+                                Bio = "Robert John Downey Jr. is an American actor. His career has been characterized by critical and popular success in his youth, followed by a period of substance abuse and legal troubles, before a resurgence of commercial success later in his career.",
+                                Image = new Image { ImagePath = "images/test/actor-Robert_Downey.jpg" }
+                            },
+                            new Actor()
+                            {
+                                FullName = "Rami Malek",
+                                Bio = "Rami Said Malek is an American actor. He is known for portraying computer hacker Elliot Alderson in the USA Network television series Mr. Robot, for which he received the Primetime Emmy Award.",
+                                Image= new Image { ImagePath = "images/test/actor-Rami.webp" }
                             }
                         });
+
                         context.SaveChanges();
                     }
                     if (!context.Producer.Any())
