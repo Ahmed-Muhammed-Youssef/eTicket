@@ -49,6 +49,15 @@ namespace mvc.Data.Base
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
+        public async Task<T?> GetByIdAsync(int id, params Expression<Func<T, object?>>[] includeProperties)
+        {
+            var query = _dbContext.Set<T>().AsQueryable<T>();
+            query = includeProperties
+               .Aggregate(query,
+               (current, includeProperties) => current.Include(includeProperties));
+            return await query.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async Task<int> UpdateAsync(T entity)
         {
             _dbContext.Set<T>().Entry(entity).State = EntityState.Modified;

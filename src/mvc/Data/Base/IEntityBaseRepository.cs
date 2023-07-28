@@ -11,6 +11,7 @@ namespace mvc.Data.Base
         public Task<IEnumerable<T>> GetAllAsync();
         public Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object?>>[] includeProperties);
         public Task<T?> GetByIdAsync(int id);
+        public Task<T?> GetByIdAsync(int id, params Expression<Func<T, object?>>[] includeProperties);
         // DELETE
         public Task DeleteAsync(int id);
         // UPDATE 
