@@ -52,7 +52,7 @@ namespace mvc.Controllers
         // GET: Actors/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
-            var actor = await _actorService.GetByIdAsync(id);
+            var actor = await _actorService.GetByIdAsync(id, a => a.Image);
             if(actor == null)
             {
                 return View("NotFound");
@@ -64,7 +64,7 @@ namespace mvc.Controllers
         // GET: Actors/Edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
-            var actor  = await _actorService.GetByIdAsync(id);
+            var actor  = await _actorService.GetByIdAsync(id, a => a.Image);
             if(actor == null)
             {
                 return View("NotFound");
@@ -84,7 +84,7 @@ namespace mvc.Controllers
         // GET: Actors/Delete/{id}
         public async Task<IActionResult> Delete(int id)
         {
-            var actor = await _actorService.GetByIdAsync(id);
+            var actor = await _actorService.GetByIdAsync(id, a => a.Image);
             if(actor == null)
             {
                 return View("NotFound");
