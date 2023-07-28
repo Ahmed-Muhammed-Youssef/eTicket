@@ -23,7 +23,7 @@ namespace mvc.Services
             {
                 await image.ImageFile.CopyToAsync(fileStream);
             }
-            return destinationOnServer;
+            return "images/" + fileName;
         }
     }
 }
