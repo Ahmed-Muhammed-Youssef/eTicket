@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace mvc.Data.Base
 {
@@ -30,28 +31,44 @@ namespace mvc.Data.Base
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false)
         {
-            return await _dbContext.Set<T>().ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object?>>[] includeProperties)
-        {
-            var query = _dbContext.Set<T>().AsQueryable<T>();
-            query = includeProperties
-                .Aggregate(query,
-                (current, includeProperties) => current.Include(includeProperties));
+            var query = _dbContext.Set<T>().AsQueryable();
+            if(!trackChanges)
+            {
+                query.AsNoTracking();
+            }
             return await query.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(int id)
-        {
-            return await _dbContext.Set<T>().FindAsync(id);
-        }
-
-        public async Task<T?> GetByIdAsync(int id, params Expression<Func<T, object?>>[] includeProperties)
+        public async Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false, params Expression<Func<T, object?>>[] includeProperties)
         {
             var query = _dbContext.Set<T>().AsQueryable<T>();
+            if (!trackChanges)
+            {
+                query.AsNoTracking();
+            }
+            query = includeProperties.Aggregate(query, (current, includeProperties) => current.Include(includeProperties));
+            return await query.ToListAsync();
+        }
+
+        public async Task<T?> GetByIdAsync( int id, bool trackChanges = false)
+        {
+            var query = _dbContext.Set<T>().AsQueryable();
+            if (!trackChanges)
+            {
+                query.AsNoTracking();
+            }
+            return await query.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<T?> GetByIdAsync(int id, bool trackChanges = false, params Expression<Func<T, object?>>[] includeProperties)
+        {
+            var query = _dbContext.Set<T>().AsQueryable<T>();
+            if (!trackChanges)
+            {
+                query.AsNoTracking();
+            }
             query = includeProperties
                .Aggregate(query,
                (current, includeProperties) => current.Include(includeProperties));

@@ -8,10 +8,10 @@ namespace mvc.Data.Base
         // POST
         public Task<T> AddAsync(T entity);
         // GET
-        public Task<IEnumerable<T>> GetAllAsync();
-        public Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object?>>[] includeProperties);
-        public Task<T?> GetByIdAsync(int id);
-        public Task<T?> GetByIdAsync(int id, params Expression<Func<T, object?>>[] includeProperties);
+        public Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false);
+        public Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false, params Expression<Func<T, object?>>[] includeProperties);
+        public Task<T?> GetByIdAsync(int id, bool trackChanges = false);
+        public Task<T?> GetByIdAsync(int id, bool trackChanges = false, params Expression<Func<T, object?>>[] includeProperties);
         // DELETE
         public Task DeleteAsync(int id);
         // UPDATE 
