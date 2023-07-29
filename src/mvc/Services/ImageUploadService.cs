@@ -11,7 +11,15 @@ namespace mvc.Services
         {
             _hostEnvironment = hostEnvironment;
         }
-        public async Task<string> UploadAsync(Image image, string imageId) 
+        public void Delete(string imagePath)
+        {
+            string destinationOnServer = Path.Combine(_hostEnvironment.WebRootPath + "/", imagePath);
+            if (File.Exists(destinationOnServer))
+            {
+                File.Delete(destinationOnServer);
+            }
+        }
+        public async Task<string> UploadAsync(Image image, string imageId)
         {
             string wwwRootPath = _hostEnvironment.WebRootPath;
             string extension = Path.GetExtension(image.ImageFile!.FileName);
