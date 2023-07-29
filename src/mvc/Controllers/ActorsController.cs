@@ -22,7 +22,7 @@ namespace mvc.Controllers
         // GET: Actors/Index
         public async Task<IActionResult> Index()
         {
-            var actors = await _actorService.GetAllAsync(a => a.Image);
+            var actors = await _actorService.GetAllAsync(trackChanges: false, a => a.Image);
             return View(actors);
         }
         
@@ -52,7 +52,7 @@ namespace mvc.Controllers
         // GET: Actors/Details/{id}
         public async Task<IActionResult> Details(int id)
         {
-            var actor = await _actorService.GetByIdAsync(id, a => a.Image);
+            var actor = await _actorService.GetByIdAsync(id, trackChanges:false, a => a.Image);
             if(actor == null)
             {
                 return View("NotFound");
@@ -64,7 +64,7 @@ namespace mvc.Controllers
         // GET: Actors/Edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
-            var actor  = await _actorService.GetByIdAsync(id, a => a.Image);
+            var actor  = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if(actor == null)
             {
                 return View("NotFound");
@@ -78,13 +78,14 @@ namespace mvc.Controllers
             {
                 return View(actor);
             }
-            await _actorService.UpdateAsync(actor);
+            
+            await _actorService.UpdateActorWithImageAsync(actor);
             return RedirectToAction(nameof(Index));
         }
         // GET: Actors/Delete/{id}
         public async Task<IActionResult> Delete(int id)
         {
-            var actor = await _actorService.GetByIdAsync(id, a => a.Image);
+            var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if(actor == null)
             {
                 return View("NotFound");
