@@ -24,33 +24,30 @@ namespace mvc.Data.DataSeed
                         {
                             new Cinema()
                             {
-                                Name = "Cinema 1",
-                                Logo = "http://dotnethow.net/images/cinemas/cinema-1.jpeg",
-                                Description = "This is the description of the first cinema"
+                                Name = "Vox",
+                                Description = "Owned and operated by Majid Al Futtaim Entertainment, VOX Cinemas is the cinema arm of Majid Al Futtaim, the leading shopping malls, communities, retail and leisure pioneer across the Middle East, Africa and Central Asia. VOX Cinemas is the Middle East’s most innovative and customer-focused exhibitor, and the fastest growing cinema business in the MENA region. With 57 locations totalling 573 screens across the region, including 237 screens in the UAE, 15 screens in Lebanon, 63 screens in Oman, 30 screens in Bahrain, 44 screens in Egypt, 149 screens in Saudi Arabia and 17 screens in Kuwait, VOX Cinemas is the Middle East’s largest and most rapidly growing exhibitor. ",
+                                Image = new Image()
+                                {
+                                    ImagePath = "images/test/cinemas/vox.jpeg"
+                                }
                             },
                             new Cinema()
                             {
-                                Name = "Cinema 2",
-                                Logo = "http://dotnethow.net/images/cinemas/cinema-2.jpeg",
-                                Description = "This is the description of the first cinema"
+                                Name = "Galaxy",
+                                Description = "located at 26th of July Corridor, Al Giza Desert, Giza Governorate.",
+                                Image = new Image()
+                                {
+                                    ImagePath = "images/test/cinemas/galaxy.jpg"
+                                }
                             },
                             new Cinema()
                             {
-                                Name = "Cinema 3",
-                                Logo = "http://dotnethow.net/images/cinemas/cinema-3.jpeg",
-                                Description = "This is the description of the first cinema"
-                            },
-                            new Cinema()
-                            {
-                                Name = "Cinema 4",
-                                Logo = "http://dotnethow.net/images/cinemas/cinema-4.jpeg",
-                                Description = "This is the description of the first cinema"
-                            },
-                            new Cinema()
-                            {
-                                Name = "Cinema 5",
-                                Logo = "http://dotnethow.net/images/cinemas/cinema-5.jpeg",
-                                Description = "This is the description of the first cinema"
+                                Name = "Sun City",
+                                Description = "Suncity Entertainments Pvt Ltd was established in June 2004. Suncity Cinemas is the Hisar’s perfect entertainment destination for people from all walks of life, from all ages and users.",
+                                Image = new Image()
+                                {
+                                    ImagePath = "images/test/cinemas/suncity.jpeg"
+                                }
                             }
                         });
                         context.SaveChanges();
