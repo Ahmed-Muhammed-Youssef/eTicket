@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using mvc.Data.Static;
+using mvc.Data.ViewModels;
 using mvc.Interfaces;
 using mvc.Models;
+using mvc.Services;
 
 namespace mvc.Controllers
 {
@@ -40,13 +42,19 @@ namespace mvc.Controllers
 
         // POST: Producers/Create
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("FullName, ProfilePictureUrl, Bio")] Producer producer)
+        public async Task<IActionResult> Create(ProducerVM producerVM)
         {
+            var producer = new Producer()
+            {
+                FullName = producerVM.FullName,
+                Bio = producerVM.Bio,
+                Image = new Image() { ImageFile = producerVM.ImageFile }
+            };
             if (!ModelState.IsValid)
             {
                 return View(producer);
             }
-            await _producerService.AddAsync(producer);
+            await _producerService.AddProducerWithImageUplodaing(producer);
             return RedirectToAction(nameof(Index));
         }
 
