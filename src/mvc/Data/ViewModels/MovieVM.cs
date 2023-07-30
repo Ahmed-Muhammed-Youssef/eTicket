@@ -1,5 +1,4 @@
 ﻿using mvc.Data.Enums;
-using mvc.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace mvc.Data.ViewModels
@@ -7,10 +6,11 @@ namespace mvc.Data.ViewModels
     public class MovieVM
     {
         public int Id { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [Display(Name = "Movie name")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = "";
 
         [Required(ErrorMessage = "Price is required")]
         [Display(Name  = "Prince in $")]
@@ -18,7 +18,7 @@ namespace mvc.Data.ViewModels
 
         [Required(ErrorMessage = "Description is required")]
         [Display(Name = "Description")]
-        public string? Description { get; set; }
+        public string Description { get; set; } = "";
 
         [Required(ErrorMessage = "Strat date is required")]
         [Display(Name = "Strat date")]
@@ -27,11 +27,6 @@ namespace mvc.Data.ViewModels
         [Required(ErrorMessage = "End date is required")]
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
-
-
-        [Required(ErrorMessage = "Movie poster is required")]
-        [Display(Name = "Movie poster")]
-        public string? ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Movie category is required")]
         [Display(Name = "Category")]

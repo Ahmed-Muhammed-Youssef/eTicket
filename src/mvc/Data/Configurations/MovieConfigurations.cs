@@ -17,7 +17,6 @@ namespace mvc.Data.Configurations
             builder.Property(m => m.MovieCategory).IsRequired();
             builder.Property(m => m.EndDate).IsRequired();
             builder.Property(m => m.StratDate).IsRequired();
-            builder.Property(m => m.ImageUrl).IsRequired();
 
             // relationships
             builder.HasOne(m => m.Director)

@@ -6,7 +6,7 @@
         public int MovieId { get; set; }
 
         // Navigation Properties
-        public Movie? Movie { get; set; }
-        public Actor? Actor { get; set; }
+        public Movie Movie { get; set; } = new Movie();
+        public Actor Actor { get; set; } = new Actor();
     }
 }
