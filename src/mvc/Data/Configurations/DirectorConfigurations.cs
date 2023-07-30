@@ -4,9 +4,9 @@ using mvc.Models;
 
 namespace mvc.Data.Configurations
 {
-    public class ProducerConfigurations : IEntityTypeConfiguration<Producer>
+    public class DirectorConfigurations : IEntityTypeConfiguration<Director>
     {
-        public void Configure(EntityTypeBuilder<Producer> builder)
+        public void Configure(EntityTypeBuilder<Director> builder)
         {
             builder.HasKey(p => p.Id);
 

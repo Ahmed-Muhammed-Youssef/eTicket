@@ -15,14 +15,14 @@ namespace mvc.Services
         }
         public async Task<Cart?> AddMovieToCartAsync(int movieId, string userId, string email)
         {
-            var cartTask = _dbContext.Cart
+            var cartTask = _dbContext.Carts
                 .Where(c => c.UserId == userId && c.Email == email)
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync();
 
             var user = _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
-            var movie = _dbContext.Movie.FirstOrDefaultAsync(m => m.Id == movieId);
+            var movie = _dbContext.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
 
             await Task.WhenAll(cartTask, user, movie);
 
@@ -56,7 +56,7 @@ namespace mvc.Services
                 {
                     cart.CartItems.Add(cartItem);
                 }
-                _dbContext.Cart.Entry(cart).State = EntityState.Modified;
+                _dbContext.Carts.Entry(cart).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
                 return cartTask.Result;
             }
@@ -69,13 +69,13 @@ namespace mvc.Services
                 AppUser = user.Result
             };
             cartItem.Cart = cart;
-            await _dbContext.Cart.AddAsync(cart);
+            await _dbContext.Carts.AddAsync(cart);
             await _dbContext.SaveChangesAsync();
             return cart;
         }
         public async Task<Cart?> RemoveMovieFromCartAsync(int movieId, string userId, string email)
         {
-            var cart = await _dbContext.Cart
+            var cart = await _dbContext.Carts
                 .Include(c => c.CartItems)
                 .ThenInclude(ci => ci.Movie)
                 .FirstOrDefaultAsync(c => c.Email == email && c.UserId == userId);
@@ -89,19 +89,19 @@ namespace mvc.Services
 
             if (cartItem!.Amount == 1)
             {
-                _dbContext.CartItem.Remove(cartItem);
+                _dbContext.CartItems.Remove(cartItem);
             }
             else
             {
                 cartItem!.Amount--;
-                _dbContext.Cart.Entry(cart).State = EntityState.Modified;
+                _dbContext.Carts.Entry(cart).State = EntityState.Modified;
             }
             await _dbContext.SaveChangesAsync();
             return cart;
         }
         public async Task<Cart?> GetUserCartAsync(string userId, string email)
         {
-            var cart = await _dbContext.Cart
+            var cart = await _dbContext.Carts
                .Where(c => c.UserId == userId && c.Email == email)
                .Include(c => c.CartItems)
                .ThenInclude(ci => ci.Movie)

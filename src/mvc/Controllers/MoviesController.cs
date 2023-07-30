@@ -13,9 +13,9 @@ namespace mvc.Controllers
         private readonly IMovieService _movieService;
         private readonly ICinemaService _cinemaService;
         private readonly IActorService _actorService;
-        private readonly IProducerService _producerService;
+        private readonly IDirectorService _producerService;
 
-        public MoviesController(IMovieService movieService, ICinemaService cinemaService, IActorService actorService, IProducerService producerService)
+        public MoviesController(IMovieService movieService, ICinemaService cinemaService, IActorService actorService, IDirectorService producerService)
         {
             _movieService = movieService;
             _cinemaService = cinemaService;
@@ -98,7 +98,7 @@ namespace mvc.Controllers
                 EndDate = movie.EndDate,
                 MovieCategory = movie.MovieCategory,
                 ImageUrl = movie.ImageUrl,
-                ProducerId = movie.ProducerId,
+                ProducerId = movie.DirectorId,
                 CinemaId = movie.CinemaId,
                 ActorIds = movie.ActorsMovies!.Select(am => am.ActorId)
             };

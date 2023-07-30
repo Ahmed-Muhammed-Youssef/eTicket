@@ -15,13 +15,13 @@ namespace mvc.Models
         public MovieCategory MovieCategory { get; set; }
 
         // Foreign Keys
-        public int ProducerId { get; set; }
+        public int DirectorId { get; set; }
         public int CinemaId { get; set; }
         public int ImageId { get; set; }
 
         // Navigation Properties
         public IEnumerable<ActorMovie>? ActorsMovies { get; set; }
-        public Producer? Producer { get; set; }
+        public Director? Director { get; set; }
         public Cinema? Cinema { get; set; }
         public Image Image { get; set; } = Image.DefaultImageFactory();
     }

@@ -20,9 +20,9 @@ namespace mvc.Data.Configurations
             builder.Property(m => m.ImageUrl).IsRequired();
 
             // relationships
-            builder.HasOne(m => m.Producer)
+            builder.HasOne(m => m.Director)
                 .WithMany(p => p.Movies)
-                .HasForeignKey(m => m.ProducerId)
+                .HasForeignKey(m => m.DirectorId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(m => m.Cinema)

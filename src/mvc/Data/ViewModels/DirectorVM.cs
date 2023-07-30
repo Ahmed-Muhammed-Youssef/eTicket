@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace mvc.Data.ViewModels
 {
-    public class ProducerVM
+    public class DirectorVM
     {
         [Required]
         [DisplayName("Full Name")]

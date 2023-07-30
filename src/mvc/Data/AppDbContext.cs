@@ -7,16 +7,16 @@ namespace mvc.Data
 {
     public class AppDbContext : IdentityDbContext<AppUser>
     {
-        public DbSet<Actor> Actor { get; set; }
-        public DbSet<Movie> Movie { get; set; }
-        public DbSet<ActorMovie> ActorMovie { get; set; }
-        public DbSet<Producer> Producer { get; set; }
-        public DbSet<Cinema> Cinema { get; set; }
-        public DbSet<Order> Order { get; set; }
-        public DbSet<OrderItem> OrderItem { get; set; }
-        public DbSet<Cart> Cart { get; set; }
-        public DbSet<CartItem> CartItem { get; set; }
-        public DbSet<Image> Image { get; set; }
+        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<ActorMovie> ActorMovies { get; set; }
+        public DbSet<Director> Directors { get; set; }
+        public DbSet<Cinema> Cinemas { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Image> Images { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -26,7 +26,7 @@ namespace mvc.Data
             modelBuilder.ApplyConfiguration(new ActorsMoviesConfigurations());
             modelBuilder.ApplyConfiguration(new MovieConfigurations());
             modelBuilder.ApplyConfiguration(new CinemaConfigurations());
-            modelBuilder.ApplyConfiguration(new ProducerConfigurations());
+            modelBuilder.ApplyConfiguration(new DirectorConfigurations());
             modelBuilder.ApplyConfiguration(new OrderConfigurations());
             modelBuilder.ApplyConfiguration(new OrderItemConfigurations());
             modelBuilder.ApplyConfiguration(new CartConfigurations());

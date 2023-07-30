@@ -27,12 +27,12 @@ namespace mvc.Services
                 EndDate = movieVM.EndDate,
                 MovieCategory = movieVM.MovieCategory,
                 ImageUrl = movieVM.ImageUrl,
-                ProducerId = movieVM.ProducerId,
+                DirectorId = movieVM.ProducerId,
                 CinemaId = movieVM.CinemaId
             };
             try
             {
-                await dbContext.Movie.AddAsync(movie);
+                await dbContext.Movies.AddAsync(movie);
                 dbContext.SaveChanges(); 
                 foreach (var actorId in movieVM.ActorIds)
                 {
@@ -64,7 +64,7 @@ namespace mvc.Services
 
             //Rremove existing ActorMovies
             var existingActorMovies = oldMovie.ActorsMovies!.Where(am => am.MovieId == oldMovie.Id);
-            dbContext.ActorMovie.RemoveRange(existingActorMovies);
+            dbContext.ActorMovies.RemoveRange(existingActorMovies);
             await dbContext.SaveChangesAsync();
 
             oldMovie.Id = movieVM.Id;
@@ -75,7 +75,7 @@ namespace mvc.Services
             oldMovie.EndDate = movieVM.EndDate;
             oldMovie.MovieCategory = movieVM.MovieCategory;
             oldMovie.ImageUrl = movieVM.ImageUrl;
-            oldMovie.ProducerId = movieVM.ProducerId;
+            oldMovie.DirectorId = movieVM.ProducerId;
             oldMovie.CinemaId = movieVM.CinemaId;
             await dbContext.SaveChangesAsync();
             try
@@ -101,8 +101,8 @@ namespace mvc.Services
 
         public async Task<Movie?> GetByIdWithInclusionAsync(int id)
         {
-            return await dbContext.Movie
-                .Include(m => m.Producer)
+            return await dbContext.Movies
+                .Include(m => m.Director)
                 .Include(m => m.Cinema)
                 .Include(m => m.ActorsMovies).ThenInclude(am => am.Actor)
                 .FirstOrDefaultAsync(m => m.Id == id);

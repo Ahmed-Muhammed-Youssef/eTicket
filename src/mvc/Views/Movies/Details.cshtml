@@ -29,8 +29,8 @@
                             </a>
                         </p>
                         <p class="card-text"><b>Producer: </b>
-                            <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model?.Producer?.Id">
-                                @Model?.Producer?.FullName
+                            <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model?.Director?.Id">
+                                @Model?.Director?.FullName
                             </a>
                         </p>
                         <p class="card-text"><b>Category: </b>@Model?.MovieCategory.ToString()</p>

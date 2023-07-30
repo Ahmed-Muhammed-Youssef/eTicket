@@ -34,9 +34,9 @@ namespace mvc.Data.Configurations
                 .OnDelete(DeleteBehavior.SetNull);
 
             // producers
-            builder.HasOne<Producer>()
+            builder.HasOne<Director>()
                .WithOne(p => p.Image)
-               .HasForeignKey<Producer>(p => p.ImageId)
+               .HasForeignKey<Director>(p => p.ImageId)
                .IsRequired(false)
                .OnDelete(DeleteBehavior.SetNull);
 

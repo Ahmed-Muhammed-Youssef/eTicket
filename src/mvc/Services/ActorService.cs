@@ -18,7 +18,7 @@ namespace mvc.Services
         }
         public async Task<Actor> UpdateActorWithImageAsync(Actor actor)
         {
-            var oldImage = await _dbContext.Actor.Include(a => a.Image)
+            var oldImage = await _dbContext.Actors.Include(a => a.Image)
                 .Where(i => i.Id == actor.Id)
                 .Select(a => a.Image)
                 .FirstOrDefaultAsync();
@@ -44,15 +44,15 @@ namespace mvc.Services
             
 
             // add the new image to the database
-            await _dbContext.Image.AddAsync(actor.Image);
+            await _dbContext.Images.AddAsync(actor.Image);
             await _dbContext.SaveChangesAsync(); 
 
             // assign the new image id to the actor image id foreign key
             actor.ImageId = actor.Image.Id;
-            _dbContext.Actor.Entry(actor).State = EntityState.Modified;
+            _dbContext.Actors.Entry(actor).State = EntityState.Modified;
 
             // remove old actor image from database
-            _dbContext.Image.Remove(oldImage);
+            _dbContext.Images.Remove(oldImage);
             await _dbContext.SaveChangesAsync();
             return actor;
         }
@@ -61,7 +61,7 @@ namespace mvc.Services
             var imagePath = await _imageUploadService.UploadAsync(actor.Image, nameof(Actor) + actor.FullName!);
             
             actor.Image.ImagePath = imagePath;
-            await _dbContext.Actor.AddAsync(actor);
+            await _dbContext.Actors.AddAsync(actor);
             await _dbContext.SaveChangesAsync();
             return actor; 
         }
@@ -69,12 +69,12 @@ namespace mvc.Services
         public async Task DeleteAsyncWithImage(Actor actor)
         {
             // remove actor image from server
-            _dbContext.Actor.Remove(actor);
+            _dbContext.Actors.Remove(actor);
             if (actor.Image != null)
             {
                 // remova actor's image from server
                 _imageUploadService.Delete(actor.Image.ImagePath);
-                _dbContext.Image.Remove(actor.Image);
+                _dbContext.Images.Remove(actor.Image);
             }
             await _dbContext.SaveChangesAsync();
         }

@@ -31,7 +31,7 @@ builder.Services.AddAuthorization();
 
 // my services
 builder.Services.AddScoped<IActorService, ActorService>();
-builder.Services.AddScoped<IProducerService, ProducerService>();
+builder.Services.AddScoped<IDirectorService, DirectorService>();
 builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IOrderService, OrderService>();

@@ -18,9 +18,9 @@ namespace mvc.Data.DataSeed
 
                     // cinema
 
-                    if (!context!.Cinema.Any())
+                    if (!context!.Cinemas.Any())
                     {
-                        context.Cinema.AddRange(new List<Cinema>()
+                        context.Cinemas.AddRange(new List<Cinema>()
                         {
                             new Cinema()
                             {
@@ -57,100 +57,103 @@ namespace mvc.Data.DataSeed
 
                     }
                    
-                    if (!context.Actor.Any())
+                    if (!context.Actors.Any())
                     {
-                        context.Actor.AddRange(new List<Actor>(){
+                        context.Actors.AddRange(new List<Actor>(){
                             new Actor()
                             {
                                 FullName = "Ryan Thomas Gosling",
                                 Bio = "Canadian actor who is Prominent in both independent film and major studio features of varying genres, his films have accrued a worldwide box office gross of over 1.9 billion USD.",
-                                Image = new Image() { ImagePath = "images/test/actor-ryan-gosling.webp" }
+                                Image = new Image() { ImagePath = "images/test/actors/actor-ryan-gosling.webp" }
                             },
                             new Actor()
                             {
                                 FullName = "Matt LeBlanc",
                                 Bio = "American actor garnered global recognition with his portrayal of Joey Tribbiani in the NBC sitcom Friends and in its spin-off series, Joey. For his work on Friends, LeBlanc received three nominations at the Primetime Emmy Awards. He has also starred as a fictionalized version of himself in Episodes (2011–2017), for which he won a Golden Globe Award and received four additional Emmy Award nominations. He co-hosted Top Gear from 2016 to 2019. From 2016 to 2020, he played patriarch Adam Burns in the CBS sitcom Man with a Plan.",
-                                Image = new Image { ImagePath = "images/test/actorMatt-LeBlanc-232420843.jpeg" }
+                                Image = new Image { ImagePath = "images/test/actors/actorMatt-LeBlanc-232420843.jpeg" }
                             },
                             new Actor()
                             {
                                 FullName = "Margot Robbie",
                                 Bio = "Australian actress and producer who is Known for her work in both blockbuster and independent films, she has received various accolades, including nominations for two Academy Awards, four Golden Globe Awards, and five British Academy Film Awards.",
-                                Image = new Image { ImagePath = "images/test/actor-margot.jpg" }
+                                Image = new Image { ImagePath = "images/test/actors/actor-margot.jpg" }
                             },
                             new Actor()
                             {
                                 FullName = "Michael Cera",
                                 Bio = "Canadian actor who is known for his awkward, offbeat characters in coming of age comedy films and for portraying George Michael Bluth in the sitcom Arrested Development. He is also known for portraying Brother Bear in The Berenstain Bears.",
-                                Image = new Image { ImagePath = "images/test/actor-michael.jpg" }
+                                Image = new Image { ImagePath = "images/test/actors/actor-michael.jpg" }
                             },
                             new Actor()
                             {
                                 FullName = "Will Ferrell",
                                 Bio = "American actor, comedian, writer, and producer. Ferrell is known for his leading man roles in comedy films and for his work as a television producer. He has earned four Emmy Awards and in 2011 was honored with the Mark Twain Prize for American Humor.",
-                                Image = new Image { ImagePath = "images/test/actor-will-ferrell.jpg" }
+                                Image = new Image { ImagePath = "images/test/actors/actor-will-ferrell.jpg" }
                             },
                             new Actor()
                             {
                                 FullName = "Cillian Murphy",
                                 Bio = "Irish actor who made his professional debut in Enda Walsh's 1996 play Disco Pigs, a role he later reprised in the 2001 screen adaptation.",
-                                Image = new Image { ImagePath = "images/test/actor-Cillian-Murphy.jpg" }
+                                Image = new Image { ImagePath = "images/test/actors/actor-Cillian-Murphy.jpg" }
                             },
                             new Actor()
                             {
                                 FullName = "Robert Downey Jr.",
                                 Bio = "Robert John Downey Jr. is an American actor. His career has been characterized by critical and popular success in his youth, followed by a period of substance abuse and legal troubles, before a resurgence of commercial success later in his career.",
-                                Image = new Image { ImagePath = "images/test/actor-Robert_Downey.jpg" }
+                                Image = new Image { ImagePath = "images/test/actors/actor-Robert_Downey.jpg" }
                             },
                             new Actor()
                             {
                                 FullName = "Rami Malek",
                                 Bio = "Rami Said Malek is an American actor. He is known for portraying computer hacker Elliot Alderson in the USA Network television series Mr. Robot, for which he received the Primetime Emmy Award.",
-                                Image= new Image { ImagePath = "images/test/actor-Rami.webp" }
+                                Image= new Image { ImagePath = "images/test/actors/actor-Rami.webp" }
                             }
                         });
 
                         context.SaveChanges();
                     }
-                    if (!context.Producer.Any())
+                    if (!context.Directors.Any())
                     {
-                        context.Producer.AddRange(new List<Producer>()
+                        context.Directors.AddRange(new List<Director>()
                         {
-                            new Producer()
+                            new Director()
                             {
-                                FullName = "Producer 1",
-                                Bio = "This is the Bio of the first actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/producers/producer-1.jpeg"
+                                FullName = "Greta Gerwig",
+                                Bio = "an American director, screenwriter, and actress who first garnered attention after working on and appearing in several mumblecore movies.",
+                                Image = new Image() { ImagePath = "images/test/directors/greta-gerwig.jpeg" }
 
                             },
-                            new Producer()
+                            new Director()
                             {
-                                FullName = "Producer 2",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/producers/producer-2.jpeg"
+                                FullName = "Christopher Nolan",
+                                Bio = "Christopher Edward Nolan CBE is a British and American filmmaker. Known for his Hollywood blockbusters with complex storytelling, Nolan is considered a leading filmmaker of the 21st century. His films have grossed $5 billion worldwide.",
+                                Image = new Image() { ImagePath = "images/test/directors/cristopher-nolan.jpeg" }
+
                             },
-                            new Producer()
+                            new Director()
                             {
-                                FullName = "Producer 3",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/producers/producer-3.jpeg"
+                                FullName = "Christopher McQuarrie",
+                                Bio = "Christopher McQuarrie is an American film director, producer and screenwriter. He received the BAFTA Award, Independent Spirit Award, and Academy Award for Best Original Screenplay for the neo-noir mystery film The Usual Suspects. He made his directorial debut with the crime thriller film The Way of the Gun.",
+                                Image = new Image() { ImagePath = "images/test/directors/Christopher_McQuarrie.jpg" }
+
                             },
-                            new Producer()
+                            new Director()
                             {
-                                FullName = "Producer 4",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/producers/producer-4.jpeg"
+                                FullName = "Peter Sohn",
+                                Bio = "Peter Sohn is an American animator, filmmaker, and voice actor, best known for his work at Pixar Animation Studios. He directed the short film Partly Cloudy and the feature films The Good Dinosaur and Elemental. He has also been the voice of Emile in Ratatouille, Squishy in Monsters University, and Sox in Lightyear.",
+                                Image = new Image() { ImagePath = "images/test/directors/peter.jpeg" }
                             },
-                            new Producer()
+                            new Director()
                             {
-                                FullName = "Producer 5",
-                                Bio = "This is the Bio of the second actor",
-                                ProfilePictureUrl = "http://dotnethow.net/images/producers/producer-5.jpeg"
+                                FullName = "Alejandro Monteverde",
+                                Bio = "José Alejandro Gómez Monteverde is a Mexican film director. His first film, Bella, took top prize at the 2006 Toronto International Film Festival by winning the \"People's Choice Award\".",
+                                Image = new Image() { ImagePath = "images/test/directors/gomez.webp" }
                             }
+
                         });
                         context.SaveChanges();
                     }
-                    if (!context.Movie.Any())
+                   /* if (!context.Movie.Any())
                     {
                         context.Movie.AddRange(new List<Movie>()
                         {
@@ -228,8 +231,8 @@ namespace mvc.Data.DataSeed
                             }
                         });
                         context.SaveChanges();
-                    }
-                    if (!context.ActorMovie.Any())
+                    }*/
+                   /* if (!context.ActorMovie.Any())
                     {
                         context.ActorMovie.AddRange(new List<ActorMovie>()
                         {
@@ -328,7 +331,7 @@ namespace mvc.Data.DataSeed
                             },
                         });
                         context.SaveChanges();
-                    }
+                    }*/
 
                 }
                 catch (Exception ex)

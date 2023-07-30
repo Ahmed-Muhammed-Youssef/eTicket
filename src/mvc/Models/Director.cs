@@ -2,7 +2,7 @@
 
 namespace mvc.Models
 {
-    public class Producer : IEntityBase
+    public class Director : IEntityBase
     {
         public int Id { get; set; }
         public string? FullName { get; set; }
