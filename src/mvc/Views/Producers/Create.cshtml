@@ -1,4 +1,4 @@
-﻿@model Producer
+﻿@model ProducerVM
 @{
     ViewData["Title"] = "Create Producer";
 }
@@ -11,27 +11,24 @@
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="Create" method="post">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger">
                     </div>
                     <div class="form-group text-center my-2">
                         <img class="rounded-circle" style="max-width: 150px;" id="ProfilePicturePreview" />
                     </div>
                     <div class="form-group my-2">
-                        <label asp-for="ProfilePictureUrl" class="control-label">
-                        </label>
-                        <input asp-for="ProfilePictureUrl" class="form-control" />
-                        <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+                        <label asp-for="ImageFile" class="form-label">Producer's image</label>
+                        <input asp-for="ImageFile" id="imgInp" accept="image/*" class="form-control" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
                     </div>
                     <div class="form-group my-2">
-                        <label asp-for="FullName" class="control-label">
-                        </label>
+                        <label asp-for="FullName" class="control-label"></label>
                         <input asp-for="FullName" class="form-control" />
                         <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
                     <div class="form-group my-2">
-                        <label asp-for="Bio" class="control-label">
-                        </label>
+                        <label asp-for="Bio" class="control-label"></label>
                         <input asp-for="Bio" class="form-control" />
                         <span asp-validation-for="Bio" class="text-danger"></span>
                     </div>
@@ -47,13 +44,11 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            var output = document.getElementById('ProfilePicturePreview');
-            output.src = $("#ProfilePictureUrl").val();
-        })
-        $("#ProfilePictureUrl").on("change", function () {
-            var output = document.getElementById('ProfilePicturePreview');
-            output.src = $(this).val();
-        })
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                ProfilePicturePreview.src = URL.createObjectURL(file)
+            }
+        }
     </script>
 }
