@@ -19,7 +19,7 @@ namespace mvc.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var producers = await _producerService.GetAllAsync();
+            var producers = await _producerService.GetAllAsync(trackChanges: false, a => a.Image);
             return View(producers);
         }
         
@@ -61,7 +61,7 @@ namespace mvc.Controllers
         // GET: Producers/Edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
-            var producer = await _producerService.GetByIdAsync(id);
+            var producer = await _producerService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (producer == null)
             {
                 return View("NotFound");
@@ -75,7 +75,8 @@ namespace mvc.Controllers
             {
                 return View(producer);
             }
-            await _producerService.UpdateAsync(producer);
+
+            await _producerService.UpdateProducerWithImageAsync(producer);
             return RedirectToAction(nameof(Index));
         }
 
@@ -94,12 +95,12 @@ namespace mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var producer = await _producerService.GetByIdAsync(id);
+            var producer = await _producerService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (producer == null)
             {
                 return View("NotFound");
             }
-            await _producerService.DeleteAsync(id);
+            await _producerService.DeleteAsyncWithImage(producer);
             return RedirectToAction(nameof(Index));
         }
     }
