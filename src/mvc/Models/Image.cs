@@ -11,7 +11,7 @@ namespace mvc.Models
 
         public static Image DefaultImageFactory()
         {
-            return new Image();
+            return new Image() { ImagePath = "images/default_image.jpg" };
         }
     }
 }
