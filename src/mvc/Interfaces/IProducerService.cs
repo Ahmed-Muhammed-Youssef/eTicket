@@ -7,5 +7,6 @@ namespace mvc.Interfaces
     {
         public Task<Producer> AddProducerWithImageUplodaing(Producer producer);
         public Task<Producer> UpdateProducerWithImageAsync(Producer producer);
+        public Task DeleteAsyncWithImage(Producer producer);
     }
 }

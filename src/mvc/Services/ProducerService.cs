@@ -66,7 +66,17 @@ namespace mvc.Services
             await _dbContext.SaveChangesAsync();
             return producer;
         }
-
-
+        public async Task DeleteAsyncWithImage(Producer producer)
+        {
+            // remove actor image from server
+            _dbContext.Producer.Remove(producer);
+            if (producer.Image != null)
+            {
+                // remova actor's image from server
+                _imageUploadService.Delete(producer.Image.ImagePath);
+                _dbContext.Image.Remove(producer.Image);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
