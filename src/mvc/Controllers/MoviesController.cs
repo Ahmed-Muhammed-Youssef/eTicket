@@ -25,7 +25,7 @@ namespace mvc.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var movies = await _movieService.GetAllAsync(trackChanges: false, n => n.Cinema);
+            var movies = await _movieService.GetAllAsync(trackChanges: false, n => n.Cinema, m => m.Image);
             return View(movies);
         }
         [AllowAnonymous]
@@ -97,7 +97,6 @@ namespace mvc.Controllers
                 StratDate = movie.StratDate,
                 EndDate = movie.EndDate,
                 MovieCategory = movie.MovieCategory,
-                ImageUrl = movie.ImageUrl,
                 ProducerId = movie.DirectorId,
                 CinemaId = movie.CinemaId,
                 ActorIds = movie.ActorsMovies!.Select(am => am.ActorId)
