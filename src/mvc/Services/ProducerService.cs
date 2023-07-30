@@ -25,7 +25,7 @@ namespace mvc.Services
                 .FirstOrDefaultAsync();
             if (oldImage == null)
             {
-                throw new InvalidOperationException("invalid actor id");
+                throw new InvalidOperationException("invalid producer id");
             }
             if (producer.Image.ImageFile == null)
             {
@@ -40,7 +40,7 @@ namespace mvc.Services
 
             // add the new image to server
             var imagePath = await _imageUploadService.UploadAsync(producer.Image, nameof(Producer) + producer.FullName!);
-            // add the new image path to the actor
+            // add the new image path to the producer
             producer.Image.ImagePath = imagePath;
 
 
@@ -52,12 +52,12 @@ namespace mvc.Services
             producer.ImageId = producer.Image.Id;
             _dbContext.Producer.Entry(producer).State = EntityState.Modified;
 
-            // remove old actor image from database
+            // remove old producer image from database
             _dbContext.Image.Remove(oldImage);
             await _dbContext.SaveChangesAsync();
             return producer;
         }
-        public async Task<Producer> AddActorWithImageUplodaing(Producer producer)
+        public async Task<Producer> AddProducerWithImageUplodaing(Producer producer)
         {
             var imagePath = await _imageUploadService.UploadAsync(producer.Image, nameof(Producer) + producer.FullName!);
 
