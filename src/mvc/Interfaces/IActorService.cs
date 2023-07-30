@@ -7,5 +7,6 @@ namespace mvc.Interfaces
     {
         public Task<Actor> AddActorWithImageUplodaing(Actor actor);
         public Task<Actor> UpdateActorWithImageAsync(Actor actor);
+        public Task DeleteAsyncWithImage(Actor actor);
     }
 }

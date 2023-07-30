@@ -95,12 +95,12 @@ namespace mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var actor = await _actorService.GetByIdAsync(id);
+            var actor = await _actorService.GetByIdAsync(id, trackChanges: false, a => a.Image);
             if (actor == null)
             {
                 return View("NotFound");
             }
-            await _actorService.DeleteAsync(id);
+            await _actorService.DeleteAsyncWithImage(actor);
             return RedirectToAction(nameof(Index));
         }
     }
