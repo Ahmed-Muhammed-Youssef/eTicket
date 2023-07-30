@@ -14,10 +14,10 @@ namespace mvc.Services
         public DirectorService(AppDbContext dbContext, IImageUploadService imageUploadService)
             :base(dbContext)
         {
-            this._dbContext = dbContext;
-            this._imageUploadService = imageUploadService;
+            _dbContext = dbContext;
+            _imageUploadService = imageUploadService;
         }
-        public async Task<Director> UpdateProducerWithImageAsync(Director director)
+        public async Task<Director> UpdateDirectorWithImageAsync(Director director)
         {
             var oldImage = await _dbContext.Directors.Include(a => a.Image)
                 .Where(i => i.Id == director.Id)
@@ -25,7 +25,7 @@ namespace mvc.Services
                 .FirstOrDefaultAsync();
             if (oldImage == null)
             {
-                throw new InvalidOperationException("invalid producer id");
+                throw new InvalidOperationException("invalid director id");
             }
             if (director.Image.ImageFile == null)
             {
@@ -35,12 +35,12 @@ namespace mvc.Services
                 return director;
 
             }
-            // remove old producer image from server
+            // remove old director image from server
             _imageUploadService.Delete(oldImage.ImagePath);
 
             // add the new image to server
             var imagePath = await _imageUploadService.UploadAsync(director.Image, nameof(Director) + director.FullName!);
-            // add the new image path to the producer
+            // add the new image path to the director
             director.Image.ImagePath = imagePath;
 
 
@@ -48,17 +48,17 @@ namespace mvc.Services
             await _dbContext.Images.AddAsync(director.Image);
             await _dbContext.SaveChangesAsync();
 
-            // assign the new image id to the producer image id foreign key
+            // assign the new image id to the director image id foreign key
             director.ImageId = director.Image.Id;
             _dbContext.Directors.Entry(director).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
 
-            // remove old producer image from database
+            // remove old director image from database
             _dbContext.Images.Remove(oldImage);
             await _dbContext.SaveChangesAsync();
             return director;
         }
-        public async Task<Director> AddProducerWithImageUplodaing(Director director)
+        public async Task<Director> AddDirectorWithImageUplodaing(Director director)
         {
             var imagePath = await _imageUploadService.UploadAsync(director.Image, nameof(Director) + director.FullName!);
 
@@ -69,11 +69,11 @@ namespace mvc.Services
         }
         public async Task DeleteAsyncWithImage(Director director)
         {
-            // remove actor image from server
+            // remove director image from server
             _dbContext.Directors.Remove(director);
             if (director.Image != null)
             {
-                // remova actor's image from server
+                // remova director's image from server
                 _imageUploadService.Delete(director.Image.ImagePath);
                 _dbContext.Images.Remove(director.Image);
             }

@@ -54,7 +54,7 @@ namespace mvc.Controllers
             {
                 return View(director);
             }
-            await _directorService.AddProducerWithImageUplodaing(director);
+            await _directorService.AddDirectorWithImageUplodaing(director);
             return RedirectToAction(nameof(Index));
         }
 
@@ -76,7 +76,7 @@ namespace mvc.Controllers
                 return View(director);
             }
 
-            await _directorService.UpdateProducerWithImageAsync(director);
+            await _directorService.UpdateDirectorWithImageAsync(director);
             return RedirectToAction(nameof(Index));
         }
 
