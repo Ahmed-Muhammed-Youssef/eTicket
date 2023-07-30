@@ -1,5 +1,5 @@
 ﻿@using mvc.Data.Static;
-@model IEnumerable<mvc.Models.Movie>
+@model IEnumerable<Movie>
 
 @{
     ViewData["Title"] = "Movies";
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <img src=@movie?.ImageUrl class="img-fluid" alt="movie poster">
+                            <img src="~/@movie!.Image.ImagePath" class="img-fluid" alt="movie poster">
                         </div>
                         <div class="col-md-6">
                             <div class="card-body">

@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img src=@Model?.ImageUrl class="img-fluid" alt="movie poster">
+                    <img src="~/@Model.Image.ImagePath" class="img-fluid" alt="movie poster">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -28,8 +28,8 @@
                                 @Model?.Cinema?.Name
                             </a>
                         </p>
-                        <p class="card-text"><b>Producer: </b>
-                            <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model?.Director?.Id">
+                        <p class="card-text"><b>Director: </b>
+                            <a asp-controller="Directors" asp-action="Details" asp-route-id="@Model?.Director?.Id">
                                 @Model?.Director?.FullName
                             </a>
                         </p>
@@ -42,7 +42,7 @@
                             <div class="row">
                                 @foreach(var actor in Model!.ActorsMovies!){
                                     <div class="col-4 text-center">
-                                        <img class="rounded-circle" style="max-width: 100px" src="@actor.Actor?.Image.ImagePath"/>
+                                        <img class="rounded-circle" style="width: 100px; height: 100px; object-fit:cover;" src="~/@actor.Actor?.Image.ImagePath"/>
                                         <br />
                                         <a asp-controller="Actors" asp-action="Details" asp-route-Id="@actor.Actor?.Id">
                                            @actor.Actor?.FullName
