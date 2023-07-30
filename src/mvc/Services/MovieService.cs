@@ -9,11 +9,13 @@ namespace mvc.Services
 {
     public class MovieService : EntityBaseRepository<Movie>, IMovieService
     {
-        private readonly AppDbContext dbContext;
+        private readonly AppDbContext _dbContext;
+        private readonly IImageUploadService _imageUploadService;
 
-        public MovieService(AppDbContext dbContext) : base(dbContext)
+        public MovieService(AppDbContext dbContext, IImageUploadService imageUploadService) : base(dbContext)
         {
-            this.dbContext = dbContext;
+           _dbContext = dbContext;
+           _imageUploadService = imageUploadService;
         }
 
         public async Task<Movie> AddMovieVMAsync(MovieVM movieVM)
@@ -26,28 +28,39 @@ namespace mvc.Services
                 StratDate = movieVM.StratDate,
                 EndDate = movieVM.EndDate,
                 MovieCategory = movieVM.MovieCategory,
-                ImageUrl = movieVM.ImageUrl,
                 DirectorId = movieVM.ProducerId,
                 CinemaId = movieVM.CinemaId
             };
+            movie.Image.ImageFile = movieVM.ImageFile;
             try
             {
-                await dbContext.Movies.AddAsync(movie);
-                dbContext.SaveChanges(); 
-                foreach (var actorId in movieVM.ActorIds)
+                if(movie.Image.ImageFile != null)
+                {
+                    var imagePath = await _imageUploadService.UploadAsync(movie.Image, nameof(Movie) + movie.Name);
+                    movie.Image.ImagePath = imagePath;
+                }
+                await _dbContext.Movies.AddAsync(movie);
+                await _dbContext.SaveChangesAsync();
+
+                // add actorsIds
+                var actors = await GetActorsByIds(movieVM.ActorIds);
+
+                foreach (var actor in actors)
                 {
                     var actorMovie = new ActorMovie
                     {
-                        ActorId = actorId,
-                        MovieId = movie.Id
+                        ActorId = actor.Id,
+                        MovieId = movie.Id,
+                        Movie = movie,
+                        Actor = actor
                     };
-                    await dbContext.AddAsync(actorMovie);
+                    await _dbContext.AddAsync(actorMovie);
                 }
-                dbContext.SaveChanges(); 
+                _dbContext.SaveChanges(); 
             }
             catch (Exception ex)
             {
-                await dbContext.DisposeAsync();
+                await _dbContext.DisposeAsync();
                 throw new Exception("Failed to add movie, pls try again.", ex);
             }
             return movie;
@@ -62,10 +75,10 @@ namespace mvc.Services
                 return null;
             }
 
-            //Rremove existing ActorMovies
+            // Remove existing ActorMovies
             var existingActorMovies = oldMovie.ActorsMovies!.Where(am => am.MovieId == oldMovie.Id);
-            dbContext.ActorMovies.RemoveRange(existingActorMovies);
-            await dbContext.SaveChangesAsync();
+            _dbContext.ActorMovies.RemoveRange(existingActorMovies);
+            await _dbContext.SaveChangesAsync();
 
             oldMovie.Id = movieVM.Id;
             oldMovie.Name = movieVM.Name;
@@ -74,26 +87,45 @@ namespace mvc.Services
             oldMovie.StratDate = movieVM.StratDate;
             oldMovie.EndDate = movieVM.EndDate;
             oldMovie.MovieCategory = movieVM.MovieCategory;
-            oldMovie.ImageUrl = movieVM.ImageUrl;
             oldMovie.DirectorId = movieVM.ProducerId;
             oldMovie.CinemaId = movieVM.CinemaId;
-            await dbContext.SaveChangesAsync();
+
+            if(movieVM.ImageFile  != null)
+            {
+                // upload the new image and add it to the database
+                var newImage = new Image() { ImageFile = movieVM.ImageFile };
+                newImage.ImagePath = await _imageUploadService.UploadAsync(newImage, nameof(Movie) + oldMovie.Name);
+                await _dbContext.Images.AddAsync(newImage);
+                await _dbContext.SaveChangesAsync();
+
+                // add the new image id to the movie
+                oldMovie.ImageId = newImage.Id;
+
+                // delete the old image
+                _dbContext.Images.Remove(oldMovie.Image);
+                oldMovie.Image = newImage;
+            }
+            await _dbContext.SaveChangesAsync();
+
+            var actors = await GetActorsByIds(movieVM.ActorIds);
             try
             {
-                foreach (var actorId in movieVM.ActorIds)
+                foreach (var actor in actors)
                 {
                     var actorMovie = new ActorMovie
                     {
-                        ActorId = actorId,
-                        MovieId = oldMovie.Id
+                        ActorId = actor.Id,
+                        MovieId = oldMovie.Id,
+                        Movie = oldMovie,
+                        Actor = actor
                     };
-                    await dbContext.AddAsync(actorMovie);
+                    await _dbContext.ActorMovies.AddAsync(actorMovie);
                 }
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
-                await dbContext.DisposeAsync();
+                await _dbContext.DisposeAsync();
                 throw new Exception("Failed to add movie, pls try again.", ex);
             }
             return oldMovie;
@@ -101,11 +133,31 @@ namespace mvc.Services
 
         public async Task<Movie?> GetByIdWithInclusionAsync(int id)
         {
-            return await dbContext.Movies
+            var query = _dbContext.Movies.AsQueryable()
+                .Include(m => m.Image)
                 .Include(m => m.Director)
                 .Include(m => m.Cinema)
-                .Include(m => m.ActorsMovies).ThenInclude(am => am.Actor)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(m => m.ActorsMovies)
+                .ThenInclude(am => am.Actor)
+                .ThenInclude(a => a.Image);
+
+            return await query.FirstOrDefaultAsync(m => m.Id == id);
+        }
+        
+        // utility
+        private async Task<IEnumerable<Actor>> GetActorsByIds(IEnumerable<int> ids)
+        {
+            var result = new List<Actor>();
+            foreach (var id in ids)
+            {
+                var a = await _dbContext.Actors.FindAsync(id);
+                if (a != null)
+                {
+                    result.Add(a);
+                }
+                // you can specify what to do with invalid ids here
+            }
+            return result;
         }
     }
 }
