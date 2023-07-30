@@ -139,5 +139,29 @@ namespace mvc.Controllers
             searchString = searchString.ToLower();
             return View("Index", movies.Where(m => m.Name!.ToLower().Contains(searchString) || m.Description!.ToLower().Contains(searchString)));
         }
+
+        // GET: Movies/Delete/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            var movie = await _movieService.GetByIdAsync(id, trackChanges: false, m => m.Image);
+            if (movie == null)
+            {
+                return View("NotFound");
+            }
+            return View(movie);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                await _movieService.RemoveWithImageAsync(id);
+            }
+            catch (InvalidOperationException ex)
+            {
+                BadRequest(ex.Message);
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

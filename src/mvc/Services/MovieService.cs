@@ -143,7 +143,24 @@ namespace mvc.Services
 
             return await query.FirstOrDefaultAsync(m => m.Id == id);
         }
-        
+        public async Task RemoveWithImageAsync(int movieId)
+        {
+            var movie = await _dbContext.Movies
+                .Include(m => m.Image)
+                .FirstOrDefaultAsync(m => m.Id == movieId);
+
+            if(movie == null)
+            {
+                throw new InvalidOperationException("invalid movie id");
+            }
+            _dbContext.Movies.Remove(movie);
+            if(movie.Image != null)
+            {
+                _dbContext.Images.Remove(movie.Image);
+                _imageUploadService.Delete(movie.Image.ImagePath);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
         // utility
         private async Task<IEnumerable<Actor>> GetActorsByIds(IEnumerable<int> ids)
         {
