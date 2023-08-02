@@ -22,8 +22,9 @@ namespace mvc.Controllers
             var director = await _directorService.GetAllAsync(trackChanges: false, d => d.Image);
             return View(director);
         }
-        
+
         // GET: Directors/Details/{id}
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var director = await _directorService.GetByIdAsync(id, trackChanges: false, d => d.Image);

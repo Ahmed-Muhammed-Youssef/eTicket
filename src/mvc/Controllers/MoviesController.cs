@@ -131,7 +131,7 @@ namespace mvc.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Filter(string searchString)
         {
-            var movies = await _movieService.GetAllAsync(trackChanges: false, n => n.Cinema);
+            var movies = await _movieService.GetAllAsync(trackChanges: false, n => n.Image);
             if(string.IsNullOrEmpty(searchString))
             {
                 return View("Index", movies);
