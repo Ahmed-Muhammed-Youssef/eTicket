@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using mvc.Interfaces;
 using System.Security.Claims;
 
@@ -11,6 +12,7 @@ namespace mvc.Data.ViewComponents
         {
             _cartService = cartService;
         }
+        [Authorize]
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var userId = UserClaimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)!.Value;

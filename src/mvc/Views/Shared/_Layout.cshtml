@@ -14,53 +14,45 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-dark shadow-lg mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Movies" asp-action="Index">eTicket</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-controller="Movies" asp-action="Index">E-Ticket</a>
+               
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" 
+                    data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">
-                                <i class="bi-film me-1"></i>Movies
-                            </a>
-                        </li>
+                <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+                    <div class="offcanvas-header">
+                        <h2 class="offcanvas-title text-white" id="offcanvasNavbar2Label">E-Ticket</h2>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body ">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         @if (User!.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
                         {
-                            
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#"
-                                role="button" data-toggle="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-gear me-1"></i>Management
+                            <li class="nav-item dropdown me-2">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Management
                                 </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Cinemas" asp-action="Index">
-                                        <i class="bi bi-camera-reels me-1"></i>Cinemas
-                                    </a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Actors" asp-action="Index">
-                                        <i class="bi bi-person-square me-1"></i>Actors
-                                    </a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Directors" asp-action="Index">
-                                        <i class="bi bi-headset me-1"></i>Directors
-                                    </a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Orders" asp-action="ListAll">
-                                        <i class="bi bi-bag me-1"></i>Orders
-                                    </a>
-                                </div>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Cinemas" asp-action="Index">Cinemas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Actors" asp-action="Index">Actors</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Directors" asp-action="Index">Directors</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Orders" asp-action="ListAll">Orders</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Users</a></li>
+                                </ul>
                             </li>
                         }
-                    </ul>
-                    <form class="input-group my-2 my-lg-0" style="width: 300px; padding-right: 25px;" asp-controller="Movies" asp-action="Filter">
-                        <input name="searchString" type="text" class="form-control"
-                        placeholder="Search for a movie..."/>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </form>
-                    <partial name="_Identity" />
+                        </ul>
+                        <form class="d-flex mt-3 mt-lg-0 me-3" role="search" asp-controller="Movies" asp-action="Filter">
+                            <input name="searchString" type="search" class="form-control me-2" placeholder="Search..." />
+                            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                        <partial name="_Identity" />
+                        
+                    </div>
                 </div>
             </div>
         </nav>
