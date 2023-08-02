@@ -167,9 +167,11 @@ namespace mvc.Data.DataSeed
                                 Price = 60.00M,
                                 StratDate = DateTime.UtcNow.AddDays(-10),
                                 EndDate = DateTime.UtcNow.AddDays(10),
-                                CinemaId = 3,
+                                CinemaId = cinemas[2].Id,
+                                Cinema = cinemas[2],
                                 MovieCategory = MovieCategory.Drama,
-                                DirectorId = 1,
+                                DirectorId = cinemas[0].Id,
+                                Director = directors[0],
                                 Image = new Image() { ImagePath = "images/test/movies/barbie.webp" },
                                 ActorsMovies = new List<ActorMovie>()
                                 {
@@ -194,9 +196,11 @@ namespace mvc.Data.DataSeed
                                 Price = 29.50M,
                                 StratDate = DateTime.UtcNow.AddDays(-10),
                                 EndDate = DateTime.UtcNow.AddDays(10),
-                                CinemaId = 1,
+                                CinemaId = cinemas[0].Id,
+                                Cinema = cinemas[0],
                                 MovieCategory = MovieCategory.Comedy,
-                                DirectorId = 4,
+                                DirectorId = directors[3].Id,
+                                Director = directors[3],
                                 Image = new Image() { ImagePath = "images/test/movies/elemental.jpg" },
                                 ActorsMovies = new List<ActorMovie>()
                                 {
@@ -213,9 +217,11 @@ namespace mvc.Data.DataSeed
                                 Price = 50.00M,
                                 StratDate = DateTime.UtcNow.AddDays(-10),
                                 EndDate = DateTime.UtcNow.AddDays(10),
-                                CinemaId = 2,
+                                CinemaId = cinemas[1].Id,
+                                Cinema = cinemas[1],
                                 MovieCategory = MovieCategory.Documentary,
-                                DirectorId = 2,
+                                DirectorId = directors[1].Id,
+                                Director = directors[1],
                                 Image = new Image() { ImagePath = "images/test/movies/film-oppen.jpeg" },
                                 ActorsMovies = new List<ActorMovie>()
                                 {
@@ -244,9 +250,11 @@ namespace mvc.Data.DataSeed
                                 Price = 40.50M,
                                 StratDate = DateTime.UtcNow.AddDays(-10),
                                 EndDate = DateTime.UtcNow.AddDays(10),
-                                CinemaId = 1,
+                                CinemaId = cinemas[0].Id,
+                                Cinema = cinemas[0],
                                 MovieCategory = MovieCategory.Action,
-                                DirectorId = 3,
+                                DirectorId = directors[2].Id,
+                                Director = directors[2],
                                 Image = new Image() { ImagePath = "images/test/movies/Impossible.jpg" },
                                 ActorsMovies = new List<ActorMovie>()
                                 {
