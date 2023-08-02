@@ -5,62 +5,34 @@
     ViewData["Title"] = "Movies";
 }
 <partial name="_CreateItem" model='"Movies"' />
-    <div class="row m-0 p-0">
-        @foreach(var movie in Model)
-        {
-            <div class="col-md-4 col-sm-6 border-primary">
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-12">
-                            <div class="card-header bg-info text-white">
-                            <h5 class="card-title">
-                                @movie.Name 
-                                @if(User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
-                                {
-                                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@movie?.Id">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    
-                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@movie?.Id">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                }
-                            </h5>
-                                
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <img src="~/@movie!.Image.ImagePath" class="img-fluid" alt="movie poster">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                <p class="card-text">@movie?.Description</p>
-                                <p class="card-text"><b>Cinema: </b>@movie?.Cinema?.Name</p>
-                                <p class="card-text"><b>Category: </b>@movie?.MovieCategory.ToString()</p>
-                                <p class="card-text"><b>Start Date: </b>@movie?.StratDate.ToString("dd MMM")</p>
-                                <p class="card-text"><b>End Date: </b>@movie?.EndDate.ToString("dd MMM")</p>
-                                
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card-footer">
-                                <p class="card-text">
-                                    <a class="btn btn-success" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@movie?.Id">
-                                        <i class="bi bi-cart-plus"></i>
-                                        Add to cart
-                                    </a>
-                                    <a class="btn btn-outline-primary float-end" asp-action="Details" asp-route-id="@movie?.Id">
-                                        <i class="bi bi-eye-fill"></i>
-                                        Show details
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    @foreach(var movie in Model)
+    {
+        <div class="col-lg-4 p-4 col-md-6 col-sm-8 offset-sm-2 m-0">
+            <div class="card movie-poster shadow-lg">
+                <img src="~/@movie!.Image.ImagePath" class="card-img-top movie-poster-image" style="max-height: 400px; object-fit: cover;" alt="movie poster">
+                @if(User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
+                {
+                    <a class="btn btn-primary edit-movie-button" asp-action="Edit" asp-route-id="@movie?.Id">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+
+                    <a class="btn btn-danger delete-movie-button" asp-action="Delete" asp-route-id="@movie?.Id">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                }
+                <a class="movie-poster-title" asp-action="Details" asp-route-id="@movie?.Id">
+                    @movie!.Name 
+                </a>
+                <a class="btn btn-lg btn-success movie-poster-cart-buton" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@movie?.Id">
+                    <i class="bi bi-cart-plus"></i>
+                    (@movie!.Price.ToString("c"))
+                </a>
+               
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
 
 
