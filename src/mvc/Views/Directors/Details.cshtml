@@ -15,19 +15,19 @@
             <img class="rounded-circle" style="width: 300px; height: 300px; object-fit: cover;" src="~/@Model.Image.ImagePath" />
         </div>
         <div class="form-group my-2">
-            <label asp-for="FullName" class="control-label">Full Name</label>
-            <input asp-for="FullName" class="form-control" readonly />
-        </div>
-        <div class="form-group my-2">
-            <label asp-for="Bio" class="control-label"></label>
-            <input asp-for="Bio" class="form-control" readonly />
+            <h2 class="control-label">Bio</h2>
+            <p class="form-control"> @Model.Bio</p>
         </div>
         <div class="form-group my-2">
             @if (User.Identity!.IsAuthenticated && User.IsInRole(UserRolesValues.Admin))
             {
                 <a class="btn btn-outline-success float-end" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
             }
-            <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+            else
+            {
+                <a class="btn btn-outline-secondary" href='javascript:history.go(-1)'>Go Back</a>
+            }
         </div>
     </div>
 </div>
