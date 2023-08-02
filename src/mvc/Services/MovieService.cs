@@ -31,7 +31,7 @@ namespace mvc.Services
                 DirectorId = movieVM.ProducerId,
                 CinemaId = movieVM.CinemaId
             };
-            movie.Image.ImageFile = movieVM.ImageFile;
+            movie.Image.ImageFile = movieVM.Image.ImageFile;
             try
             {
                 if(movie.Image.ImageFile != null)
@@ -90,10 +90,10 @@ namespace mvc.Services
             oldMovie.DirectorId = movieVM.ProducerId;
             oldMovie.CinemaId = movieVM.CinemaId;
 
-            if(movieVM.ImageFile  != null)
+            if(movieVM.Image  != null)
             {
                 // upload the new image and add it to the database
-                var newImage = new Image() { ImageFile = movieVM.ImageFile };
+                var newImage = new Image() { ImageFile = movieVM.Image.ImageFile };
                 newImage.ImagePath = await _imageUploadService.UploadAsync(newImage, nameof(Movie) + oldMovie.Name);
                 await _dbContext.Images.AddAsync(newImage);
                 await _dbContext.SaveChangesAsync();

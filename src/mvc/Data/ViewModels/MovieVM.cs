@@ -1,4 +1,5 @@
 ﻿using mvc.Data.Enums;
+using mvc.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace mvc.Data.ViewModels
@@ -6,7 +7,7 @@ namespace mvc.Data.ViewModels
     public class MovieVM
     {
         public int Id { get; set; }
-        public IFormFile? ImageFile { get; set; }
+        public Image Image { get; set; } = new Image();
 
         [Required(ErrorMessage = "Name is required")]
         [Display(Name = "Movie name")]

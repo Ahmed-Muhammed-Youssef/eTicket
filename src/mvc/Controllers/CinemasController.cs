@@ -36,7 +36,7 @@ namespace mvc.Controllers
         // Get: Cinemas/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new CinemaVM());
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace mvc.Controllers
             {
                 Name = cinemaVM.Name,
                 Description = cinemaVM.Description,
-                Image = new Image() { ImageFile = cinemaVM.ImageFile }
+                Image = new Image() { ImageFile = cinemaVM.Image.ImageFile }
             };
             if (!ModelState.IsValid)
             {

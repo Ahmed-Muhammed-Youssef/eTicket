@@ -29,7 +29,7 @@ namespace mvc.Controllers
         // GET: Actors/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new ActorVM());
         }
         
         [HttpPost]
@@ -39,7 +39,7 @@ namespace mvc.Controllers
             {
                 FullName = actorVM.FullName,
                 Bio = actorVM.Bio,
-                Image = new Image() { ImageFile = actorVM.ImageFile }
+                Image = new Image() { ImageFile = actorVM.Image.ImageFile }
             };
             if (!ModelState.IsValid)
             {

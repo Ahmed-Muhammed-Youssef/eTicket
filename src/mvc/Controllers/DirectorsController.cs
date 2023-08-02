@@ -38,7 +38,7 @@ namespace mvc.Controllers
         // GET: Directors/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new DirectorVM());
         }
 
         // POST: Directors/Create
@@ -49,7 +49,7 @@ namespace mvc.Controllers
             {
                 FullName = directorVM.FullName,
                 Bio = directorVM.Bio,
-                Image = new Image() { ImageFile = directorVM.ImageFile }
+                Image = new Image() { ImageFile = directorVM.Image.ImageFile }
             };
             if (!ModelState.IsValid)
             {

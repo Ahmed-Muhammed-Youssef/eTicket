@@ -51,7 +51,7 @@ namespace mvc.Controllers
             ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
             ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
             ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
-            return View();
+            return View(new MovieVM());
         }
 
         [HttpPost]
@@ -91,6 +91,7 @@ namespace mvc.Controllers
             var movieVm = new MovieVM()
             {
                 Id = movie!.Id,
+                Image = movie.Image,
                 Name = movie.Name,
                 Price = movie.Price,
                 Description = movie.Description,

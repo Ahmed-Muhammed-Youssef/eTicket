@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using mvc.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace mvc.Data.ViewModels
@@ -12,6 +13,6 @@ namespace mvc.Data.ViewModels
         [Required]
         [DisplayName("Description")]
         public string Description { get; set; } = "";
-        public IFormFile? ImageFile { get; set; }
+        public Image Image { get; set; } = new Image();
     }
 }

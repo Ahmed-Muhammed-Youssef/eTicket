@@ -26,3 +26,9 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.image-default-size {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
