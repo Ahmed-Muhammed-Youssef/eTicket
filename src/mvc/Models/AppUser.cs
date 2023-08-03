@@ -10,5 +10,6 @@ namespace mvc.Models
         // Navigation properties
         public List<Order> Orders { get; set; } = new List<Order>();
         public Cart? Cart { get; set; }
+        public string GetFullName() => FirstName + (string.IsNullOrEmpty(LastName) ? "" : " " + LastName);
     }
 }
