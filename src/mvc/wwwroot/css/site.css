@@ -32,3 +32,6 @@ body {
     height: 300px;
     object-fit: cover;
 }
+.clickable-table-row:hover{
+    cursor:pointer;
+}
