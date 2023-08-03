@@ -7,5 +7,6 @@ namespace mvc.Data.ViewModels
         public List<Order> Orders { get; set; } = new List<Order>();
         public Cart? Cart { get; set; }
         public decimal MoneyPaied { get; set; }
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
     }
 }

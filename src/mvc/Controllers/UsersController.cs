@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using mvc.Data.Static;
 using mvc.Data.ViewModels;
 using mvc.Models;
-using System.Linq;
 
 namespace mvc.Controllers
 {
@@ -45,6 +44,7 @@ namespace mvc.Controllers
             {
                 return View("NotFound");
             }
+            var roles = await _userManager.GetRolesAsync(u);
             var userVM = new DetailedUserVM()
             {
                 Id = u.Id,
@@ -54,7 +54,8 @@ namespace mvc.Controllers
                 PhoneNumber = u.PhoneNumber ?? "-",
                 Orders = u.Orders,
                 Cart = u.Cart,
-                MoneyPaied = u.Orders.Aggregate(0M, (acc, cur) => acc + cur.GetTotalPrice(), acc => acc)
+                MoneyPaied = u.Orders.Aggregate(0M, (acc, cur) => acc + cur.GetTotalPrice(), acc => acc),
+                Roles = roles.ToList()?? new List<string>()
             };
             return View(userVM);
         }
