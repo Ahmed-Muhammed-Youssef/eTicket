@@ -18,6 +18,14 @@
             <li><b>Email</b>: @Model.Email</li>
             <li><b>Phone Number</b>: @Model.PhoneNumber</li>
         </ul>
+        <h4>User Address</h4>
+        <ul>
+           <li>Country: @Model.Country</li>
+           <li>State: @Model.State</li>
+           <li>City: @Model.City</li>
+           <li>Street: @Model.Street</li>
+           <li>Zip Code: @Model.ZipCode</li>
+        </ul>
         @if (Model.Orders.Count > 0)
         {
             <h4>Orders</h4>

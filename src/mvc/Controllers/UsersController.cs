@@ -39,6 +39,7 @@ namespace mvc.Controllers
             var u = await _userManager.Users
                 .Include(u => u.Orders)
                 .Include(u => u.Cart)
+                .Include (u => u.UserAddress)
                 .FirstOrDefaultAsync(u => u.Id == id);
             if (u is null)
             {
@@ -55,7 +56,12 @@ namespace mvc.Controllers
                 Orders = u.Orders,
                 Cart = u.Cart,
                 MoneyPaied = u.Orders.Aggregate(0M, (acc, cur) => acc + cur.GetTotalPrice(), acc => acc),
-                Roles = roles.ToList()?? new List<string>()
+                Roles = roles.ToList()?? new List<string>(),
+                Country = u.UserAddress.Country,
+                State = u.UserAddress.State,
+                City = u.UserAddress.City,
+                Street = u.UserAddress.Street,
+                ZipCode = u.UserAddress.ZipCode
             };
             return View(userVM);
         }
