@@ -307,7 +307,9 @@ namespace mvc.Data.DataSeed
                             LastName = configuration.GetSection("AdminUser")["LastName"]!,
                             UserName = configuration.GetSection("AdminUser")["UserName"]!,
                             Email = configuration.GetSection("AdminUser")["Email"]!,
-                            EmailConfirmed = true
+                            EmailConfirmed = true,
+                            PhoneNumber = configuration.GetSection("AdminUser")["PhoneNumber"]!,
+                            PhoneNumberConfirmed = true
                         };
                         await userManager.CreateAsync(adminUser, configuration.GetSection("AdminUser")["Password"]!);
                         await userManager.AddToRoleAsync(adminUser, UserRolesValues.Admin);
@@ -322,7 +324,9 @@ namespace mvc.Data.DataSeed
                             LastName = configuration.GetSection("TestUser")["LastName"]!,
                             UserName = configuration.GetSection("TestUser")["UserName"]!,
                             Email = configuration.GetSection("TestUser")["Email"]!,
-                            EmailConfirmed = true
+                            EmailConfirmed = true,
+                            PhoneNumber = configuration.GetSection("TestUser")["PhoneNumber"]!,
+                            PhoneNumberConfirmed = true
                         };
                         await userManager.CreateAsync(testUser, configuration.GetSection("TestUser")["Password"]!);
                         await userManager.AddToRoleAsync(testUser, UserRolesValues.User);

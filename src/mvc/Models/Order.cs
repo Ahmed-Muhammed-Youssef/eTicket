@@ -1,4 +1,5 @@
 ﻿using mvc.Data.Base;
+using mvc.Data.Enums;
 
 namespace mvc.Models
 {
@@ -7,6 +8,7 @@ namespace mvc.Models
         public int Id { get; set; }
         public string Email { get; set; } = "";
         public string TransactionKey { get; set; } = "";
+        public OrderStatus OrderStatus { get; set; } = OrderStatus.OnGoing;
 
         // Foreign key
         public string UserId { get; set; } = "";
@@ -17,6 +19,17 @@ namespace mvc.Models
         public decimal GetTotalPrice()
         {
             return OrderItems.Sum(x => x.Price);
+        }
+        public string GetOrderStatusAsString()
+        {
+            if(OrderStatus == OrderStatus.OnGoing)
+            {
+                return "On Going";
+            }
+            else
+            {
+                return "Done";
+            }
         }
     }
 }
