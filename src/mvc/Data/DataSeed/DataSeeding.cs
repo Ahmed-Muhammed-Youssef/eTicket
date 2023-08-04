@@ -309,7 +309,15 @@ namespace mvc.Data.DataSeed
                             Email = configuration.GetSection("AdminUser")["Email"]!,
                             EmailConfirmed = true,
                             PhoneNumber = configuration.GetSection("AdminUser")["PhoneNumber"]!,
-                            PhoneNumberConfirmed = true
+                            PhoneNumberConfirmed = true,
+                            UserAddress = new UserAddress()
+                            {
+                                Country = "Egypt",
+                                State = "Cairo",
+                                City = "Cairo",
+                                Street = "Dokki",
+                                ZipCode = "13456"
+                            }
                         };
                         await userManager.CreateAsync(adminUser, configuration.GetSection("AdminUser")["Password"]!);
                         await userManager.AddToRoleAsync(adminUser, UserRolesValues.Admin);
@@ -326,7 +334,14 @@ namespace mvc.Data.DataSeed
                             Email = configuration.GetSection("TestUser")["Email"]!,
                             EmailConfirmed = true,
                             PhoneNumber = configuration.GetSection("TestUser")["PhoneNumber"]!,
-                            PhoneNumberConfirmed = true
+                            PhoneNumberConfirmed = true,
+                            UserAddress = new UserAddress(){
+                                Country = "Egypt",
+                                State = "Cairo",
+                                City = "Cairo",
+                                Street = "Dokki",
+                                ZipCode = "13456"
+                            }
                         };
                         await userManager.CreateAsync(testUser, configuration.GetSection("TestUser")["Password"]!);
                         await userManager.AddToRoleAsync(testUser, UserRolesValues.User);

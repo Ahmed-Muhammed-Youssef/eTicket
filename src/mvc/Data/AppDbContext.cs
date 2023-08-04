@@ -32,6 +32,7 @@ namespace mvc.Data
             modelBuilder.ApplyConfiguration(new CartConfigurations());
             modelBuilder.ApplyConfiguration(new CartItemConfigurations());
             modelBuilder.ApplyConfiguration(new ImageConfigurations());
+            modelBuilder.ApplyConfiguration(new UserAddressConfigurations());
             base.OnModelCreating(modelBuilder);
         }
     }
