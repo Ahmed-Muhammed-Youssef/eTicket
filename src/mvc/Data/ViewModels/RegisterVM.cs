@@ -26,6 +26,27 @@ namespace mvc.Data.ViewModels
         public string PhoneNumber { get; set; } = "";
 
         [Required(ErrorMessage = "This field is required")]
+        [MaxLength(32), MinLength(2)]
+        public string Country { get; set; } = "";
+
+        [Required(ErrorMessage = "This field is required")]
+        [MaxLength(32), MinLength(2)]
+        public string State { get; set; } = "";
+
+        [Required(ErrorMessage = "This field is required")]
+        [MaxLength(32), MinLength(2)]
+        public string City { get; set; } = "";
+
+        [Required(ErrorMessage = "This field is required")]
+        [MaxLength(32), MinLength(2)]
+        public string Street { get; set; } = "";
+
+        [Required(ErrorMessage = "This field is required")]
+        [MaxLength(32), MinLength(2)]
+        [DataType(DataType.PostalCode)]
+        public string ZipCode { get; set; } = "";
+
+        [Required(ErrorMessage = "This field is required")]
         [DataType(DataType.Password)]
         [RegularExpression("(?=^.{6,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\\s).*$",
             ErrorMessage = "Password must have at least 1 Uppercase, 1 Lowercase, 1 number, 1 non alphanumeric and at least 6 characters")]
