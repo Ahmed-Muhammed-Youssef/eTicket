@@ -66,5 +66,21 @@ namespace mvc.Services
                 .ToListAsync();
             return orders;
         }
+    
+        public async Task MarkAsDone(int id)
+        {
+            var order = await _dbContext.Orders.FindAsync(id);
+            if (order is null)
+            {
+                throw new InvalidOperationException("order not found");
+            }
+            if (order.OrderStatus == Data.Enums.OrderStatus.Done)
+            {
+                throw new InvalidOperationException("order is already done");
+            }
+            order.OrderStatus = Data.Enums.OrderStatus.Done;
+
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
