@@ -86,6 +86,8 @@ namespace mvc.Controllers
                 UserName = registerVM.UserName,
                 Email = registerVM.Email,
                 EmailConfirmed = true,
+                PhoneNumber = registerVM.PhoneNumber,
+                PhoneNumberConfirmed = true
             };
             var res = await _userManager.CreateAsync(user, registerVM.Password);
             if(!res.Succeeded)
