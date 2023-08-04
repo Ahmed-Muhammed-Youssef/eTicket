@@ -37,9 +37,11 @@ namespace mvc.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var u = await _userManager.Users
-                .Include(u => u.Orders)
                 .Include(u => u.Cart)
                 .Include (u => u.UserAddress)
+                .Include(u => u.Orders)
+                .ThenInclude(u => u.OrderItems)
+                .ThenInclude(oi => oi.Movie)
                 .FirstOrDefaultAsync(u => u.Id == id);
             if (u is null)
             {
