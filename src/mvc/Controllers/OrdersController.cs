@@ -99,6 +99,19 @@ namespace mvc.Controllers
             return View("OrderCompleted");
         }
         [HttpPost]
+        public async Task<IActionResult> MarkDone(int id)
+        {
+            try
+            {
+                await _orderService.MarkAsDone(id);
+            }
+            catch(Exception ex)
+            {
+                return View("NotFound");
+            }
+            return RedirectToAction("ListAll");
+        }
+        [HttpPost]
         public async Task<IActionResult> Order(CancellationToken cancellationToken)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
