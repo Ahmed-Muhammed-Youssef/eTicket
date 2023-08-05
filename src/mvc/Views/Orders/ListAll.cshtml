@@ -48,13 +48,17 @@
                         </td>
                         <td class="align-middle">
 
-                            <p>@order.GetOrderStatusAsString()</p>
                             @if(order.OrderStatus == mvc.Data.Enums.OrderStatus.OnGoing)
                             {
+                                <span class="badge bg-info mb-3">@order.GetOrderStatusAsString()</span>
                                 <form asp-action="MarkDone" method="post">
                                     <input type="hidden" name="Id" value="@order.Id" />
                                     <input type="submit" value="Mark As Done" class="btn btn-success" />
                                 </form>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@order.GetOrderStatusAsString()</span>
                             }
                         </td>
 
