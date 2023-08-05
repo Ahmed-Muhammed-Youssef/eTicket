@@ -35,7 +35,7 @@ namespace mvc.Data.ViewModels
 
         [Required(ErrorMessage = "Producer is required")]
         [Display(Name = "Producer")]
-        public int ProducerId { get; set; }
+        public int DirectorId { get; set; }
 
         [Required(ErrorMessage = "Cinema is required")]
         [Display(Name = "Cinema")]

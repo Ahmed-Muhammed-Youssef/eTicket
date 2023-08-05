@@ -20,6 +20,13 @@ namespace mvc.Services
 
         public async Task<Movie> AddMovieVMAsync(MovieVM movieVM)
         {
+            var directorTask = _dbContext.Directors.FirstOrDefaultAsync(d => d.Id == movieVM.DirectorId);
+            var cinemaTask = _dbContext.Cinemas.FirstOrDefaultAsync(d => d.Id == movieVM.CinemaId);
+            await Task.WhenAll(directorTask, cinemaTask);
+            if(directorTask.Result is null || cinemaTask.Result is null)
+            {
+                throw new InvalidOperationException("cinema or director is is not valid");
+            }
             var movie = new Movie
             {
                 Name = movieVM.Name,
@@ -28,8 +35,10 @@ namespace mvc.Services
                 StratDate = movieVM.StratDate,
                 EndDate = movieVM.EndDate,
                 MovieCategory = movieVM.MovieCategory,
-                DirectorId = movieVM.ProducerId,
-                CinemaId = movieVM.CinemaId
+                DirectorId = movieVM.DirectorId,
+                Director = directorTask.Result,
+                CinemaId = movieVM.CinemaId,
+                Cinema = cinemaTask.Result
             };
             movie.Image.ImageFile = movieVM.Image.ImageFile;
             try
@@ -87,7 +96,7 @@ namespace mvc.Services
             oldMovie.StratDate = movieVM.StratDate;
             oldMovie.EndDate = movieVM.EndDate;
             oldMovie.MovieCategory = movieVM.MovieCategory;
-            oldMovie.DirectorId = movieVM.ProducerId;
+            oldMovie.DirectorId = movieVM.DirectorId;
             oldMovie.CinemaId = movieVM.CinemaId;
 
             if(movieVM.Image  != null)

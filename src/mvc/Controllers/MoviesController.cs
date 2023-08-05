@@ -57,13 +57,6 @@ namespace mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(MovieVM movieVm)
         {
-            var actors = _actorService.GetAllAsync();
-            var producers = _producerService.GetAllAsync();
-            var cinemas = _cinemaService.GetAllAsync();
-            await Task.WhenAll(actors, producers, cinemas);
-            ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
-            ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
-            ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
             if (!ModelState.IsValid)
             {
                 return View(movieVm);
@@ -98,7 +91,7 @@ namespace mvc.Controllers
                 StratDate = movie.StratDate,
                 EndDate = movie.EndDate,
                 MovieCategory = movie.MovieCategory,
-                ProducerId = movie.DirectorId,
+                DirectorId = movie.DirectorId,
                 CinemaId = movie.CinemaId,
                 ActorIds = movie.ActorsMovies!.Select(am => am.ActorId)
             };
@@ -113,13 +106,6 @@ namespace mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(MovieVM movieVm)
         {
-            var actors = _actorService.GetAllAsync();
-            var producers = _producerService.GetAllAsync();
-            var cinemas = _cinemaService.GetAllAsync();
-            await Task.WhenAll(actors, producers, cinemas);
-            ViewBag.Actors = new SelectList(actors.Result, "Id", "FullName");
-            ViewBag.Producers = new SelectList(producers.Result, "Id", "FullName");
-            ViewBag.Cinemas = new SelectList(cinemas.Result, "Id", "Name");
             if (!ModelState.IsValid)
             {
                 return View(movieVm);

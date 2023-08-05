@@ -15,6 +15,8 @@ namespace mvc.Data.ViewModels
         public string LastName { get; set; } = "";
         
         [Required(ErrorMessage = "This field is required")]
+        [MaxLength(32, ErrorMessage = "User name can't be more than 32 character"),
+            MinLength(4, ErrorMessage = "User name name can't be less than 3 characters")]
         public string UserName { get; set; } = "";
 
         [Required(ErrorMessage = "This field is required")]
