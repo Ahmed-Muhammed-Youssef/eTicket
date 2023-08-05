@@ -99,7 +99,7 @@ namespace mvc.Services
             oldMovie.DirectorId = movieVM.DirectorId;
             oldMovie.CinemaId = movieVM.CinemaId;
 
-            if(movieVM.Image  != null)
+            if(movieVM.Image.ImageFile != null)
             {
                 // upload the new image and add it to the database
                 var newImage = new Image() { ImageFile = movieVM.Image.ImageFile };
